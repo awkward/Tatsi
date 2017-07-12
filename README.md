@@ -1,4 +1,6 @@
 # Tatsi
+[![Build Status](https://travis-ci.org/awkward/Tatsi.svg?branch=master)](https://travis-ci.org/awkward/Tatsi)
+
 A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos
 
 ## Screenshots 
