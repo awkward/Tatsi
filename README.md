@@ -1,5 +1,7 @@
 # Tatsi
 [![Build Status](https://travis-ci.org/awkward/Tatsi.svg?branch=master)](https://travis-ci.org/awkward/Tatsi)
+[![Contact](https://img.shields.io/badge/contact-madeawkward-blue.svg?style=flat)](https://twitter.com/madeawkward)
+![License](https://img.shields.io/github/license/awkward/tatsi.svg?style=flat)
 
 A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos
 
@@ -54,3 +56,4 @@ Tatsi = Photos in Planco, the language spoken in the game Planet Coaster. [Sourc
 - [ ] Icons for the hidden and recently deleted albums
 - [ ] Proper `init?(coder aDecoder: NSCoder)` support
 - [ ] UI Tests
+- [ ] Running Unit Tests on Travis
