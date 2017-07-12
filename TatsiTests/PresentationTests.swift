@@ -13,6 +13,15 @@ import Photos
 /// Tests the presentation of the TatsiPickerViewController.
 final class PresentationTests: TatsiTestCase {
     
+    override func setUp() {
+        super.setUp()
+        
+        guard PHPhotoLibrary.authorizationStatus() == .authorized else {
+            XCTFail("This test requires access to the Photos Library")
+            return
+        }
+    }
+    
     /// Tests the presentation of the TatsiPickerViewController with the first view set to the user library.
     func testUserLibraryPresentation() {
         var config = TatsiConfig.default

@@ -12,6 +12,15 @@ import Photos
 
 /// Test the extensions on PHAssetCollection.
 final class PHAssetCollectionExtensionsTests: TatsiTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        
+        guard PHPhotoLibrary.authorizationStatus() == .authorized else {
+            XCTFail("This test requires access to the Photos Library")
+            return
+        }
+    }
 
     /// Tests to make sure the isRecentlyDeletedCollection works.
     func testContainsRecentlyDeleted() {
