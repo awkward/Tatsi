@@ -1,5 +1,6 @@
 
 language: swift
 osx_image: xcode8.3
+xcode_sdk: iphonesimulator10.3
 script:
-  - xcodebuild clean build test -project Tatsi.xcodeproj -scheme TatsiTests
+  - xcodebuild clean build test -project Tatsi.xcodeproj -scheme Tatsi
