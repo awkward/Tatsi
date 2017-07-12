@@ -1,7 +1,7 @@
 # Tatsi
 [![Build Status](https://travis-ci.org/awkward/Tatsi.svg?branch=master)](https://travis-ci.org/awkward/Tatsi)
 [![Contact](https://img.shields.io/badge/contact-madeawkward-blue.svg?style=flat)](https://twitter.com/madeawkward)
-![License](https://img.shields.io/github/license/awkward/tatsi.svg?style=flat)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos
 
