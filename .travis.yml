@@ -1,3 +1,5 @@
 
 language: swift
 osx_image: xcode8.3
+script:
+  - xcodebuild clean build test -project Tatsi.xcodeproj -scheme TatsiTests
