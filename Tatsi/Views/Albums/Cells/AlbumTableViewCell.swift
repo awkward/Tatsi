@@ -102,12 +102,23 @@ final internal class AlbumTableViewCell: UITableViewCell {
         
         self.titleLabel.text = self.album?.localizedTitle
         
-        let fetchOptions = options ?? PHFetchOptions()
-        if let count = self.album?.fetchNumberOfItems(fetchOptions), count != NSNotFound {
+        let fetchOptions = options
+        let count = self.album?.estimatedAssetCount ?? 0
+        
+        //First we set a temporary count that might not represent the actual count
+        if count != NSNotFound {
             self.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
         } else {
             self.countLabel.text = "0"
         }
+        
+        self.album?.fetchNumberOfItems(for: fetchOptions, completionHandler: { [weak self] (count, collection) in
+            guard let strongSelf = self, collection == strongSelf.album else {
+                return
+            }
+            self?.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
+        })
+
         
         self.albumImageView.imageView.contentMode = UIViewContentMode.center
         self.albumImageView.image = nil

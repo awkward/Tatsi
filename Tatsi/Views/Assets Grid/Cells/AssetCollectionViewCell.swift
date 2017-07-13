@@ -131,16 +131,21 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         }
         let requestOptions = PHImageRequestOptions()
         requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
+        requestOptions.isSynchronous = false
         
         self.imageView.contentMode = UIViewContentMode.center
         self.imageView.image = nil
-        self.currentRequest = imageManager.requestImage(for: asset, targetSize: self.imageSize.scaled(with: UIScreen.main.scale), contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
-            if let image = image {
-                self.imageView.contentMode = UIViewContentMode.scaleAspectFill
-                self.imageView.image = image
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.currentRequest = imageManager.requestImage(for: asset, targetSize: self.imageSize.scaled(with: UIScreen.main.scale), contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
+                DispatchQueue.main.async {
+                    if let image = image {
+                        self.imageView.contentMode = UIViewContentMode.scaleAspectFill
+                        self.imageView.image = image
+                    }
+                }
             }
-            
         }
+        
     }
     
     override var isSelected: Bool {

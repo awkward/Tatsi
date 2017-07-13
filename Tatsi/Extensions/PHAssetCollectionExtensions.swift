@@ -12,21 +12,18 @@ import ObjectiveC
 
 extension PHAssetCollection {
     
-    private struct AssociatedKeys {
-        static var numberOfItems = "PHAssetCollection.numberOfItems"
-    }
-    
-    internal func loadPreviewImage(_ targetSize: CGSize, fetchOptions: PHFetchOptions = PHFetchOptions(), completionHandler: @escaping ((_ image: UIImage?, _ asset: PHAsset?) -> Void)) {
-        DispatchQueue.global(qos: .default).async {
+    internal func loadPreviewImage(_ targetSize: CGSize, fetchOptions: PHFetchOptions? = nil, completionHandler: @escaping ((_ image: UIImage?, _ asset: PHAsset?) -> Void)) {
+        DispatchQueue.global(qos: .userInteractive).async {
             var asset: PHAsset?
             
-            if let assetFetchOptions = fetchOptions.copy() as? PHFetchOptions {
-                assetFetchOptions.fetchLimit = 1
-                assetFetchOptions.sortDescriptors = nil
-                let result = PHAsset.fetchKeyAssets(in: self, options: assetFetchOptions)
-                if let resultAsset = result?.firstObject {
-                    asset = resultAsset
-                }
+            var assetFetchOptions: PHFetchOptions?
+            if let fetchOptions = fetchOptions?.copy() as? PHFetchOptions {
+                fetchOptions.fetchLimit = 1
+                assetFetchOptions = fetchOptions
+            }
+            let result = PHAsset.fetchKeyAssets(in: self, options: assetFetchOptions)
+            if let resultAsset = result?.firstObject {
+                asset = resultAsset
             }
             
             if let asset = asset {
@@ -46,22 +43,28 @@ extension PHAssetCollection {
         }
     }
     
-    private var numberOfItems: Int? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.numberOfItems) as? Int
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedKeys.numberOfItems, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    internal func fetchNumberOfItems(for fetchOptions: PHFetchOptions? = nil, completionHandler: @escaping ((_ count: Int, _ collection: PHAssetCollection) -> Void)) {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            let result = PHAsset.fetchAssets(in: strongSelf, options: fetchOptions)
+            DispatchQueue.main.async {
+                completionHandler(result.count, strongSelf)
+            }
         }
     }
     
-    internal func fetchNumberOfItems(_ fetchOptions: PHFetchOptions) -> Int {
-        guard let numberOfItems = self.numberOfItems else {
-            let result = PHAsset.fetchAssets(in: self, options: fetchOptions)
-            self.numberOfItems = result.count
-            return result.count
+    internal func isEmpty(for fetchOptions: PHFetchOptions? = nil) -> Bool {
+        guard self.estimatedAssetCount > 0 || self.estimatedAssetCount == NSNotFound else {
+           return true
         }
-        return numberOfItems
+        if let fetchOptions = fetchOptions?.copy() as? PHFetchOptions {
+            fetchOptions.fetchLimit = 1
+            return PHAsset.fetchAssets(in: self, options: fetchOptions).count == 0
+        } else {
+            return false
+        }
     }
     
     internal var isRecentlyDeletedCollection: Bool {

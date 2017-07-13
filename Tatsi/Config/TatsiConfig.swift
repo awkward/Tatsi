@@ -101,8 +101,11 @@ public struct TatsiConfig {
         return bannedAlbumSubtypes
     }
     
-    /// Creates and returns the fetch options to use for fetching assets based on the config.
-    internal func assetFetchOptions() -> PHFetchOptions {
+    /// Creates and returns the fetch options to use for fetching assets based on the config. Nil if the fetchOptions are not needed.
+    internal func assetFetchOptions() -> PHFetchOptions? {
+        guard self.supportedMediaTypes.contains(.image) && self.supportedMediaTypes.contains(.video) && self.supportedMediaSubTypes == nil else {
+            return nil
+        }
         let fetchOptions = PHFetchOptions()
         
         var predicates = [NSPredicate]()
@@ -140,7 +143,7 @@ public struct TatsiConfig {
         
         if self.showEmptyAlbums == false {
             // If we don't allow empty albums, we hide the albums that have less than 1 asset.
-            guard assetCollection.fetchNumberOfItems(self.assetFetchOptions()) > 0 else {
+            guard !assetCollection.isEmpty(for: self.assetFetchOptions()) else {
                 return false
             }
         }

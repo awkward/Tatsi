@@ -61,7 +61,15 @@ final class PHAssetCollectionExtensionsTests: TatsiTestCase {
         
         self.addImages(images)
         
-        XCTAssert(collection.fetchNumberOfItems(config.assetFetchOptions()) == 2, "The user library should contain at least 2 images")
+        let expectation = self.expectation(description: "The count of the collection should equal the number of images added")
+        collection.fetchNumberOfItems { (count, countedCollection) in
+            XCTAssert(count == images.count, "The count of the collection should equal the number of images added")
+            XCTAssert(collection == countedCollection, "The collection from the handler should match the original collection")
+            XCTAssert(Thread.isMainThread, "The completion handler should be called on the main thread")
+            expectation.fulfill()
+        }
+        
+        self.wait(for: [expectation], timeout: 5)
     }
     
     /// Tests the fetching a preview image for the collection.
@@ -85,7 +93,7 @@ final class PHAssetCollectionExtensionsTests: TatsiTestCase {
                 XCTAssert(Thread.isMainThread, "The closure should respond on the main thread")
                 XCTAssert(image.size != CGSize(), "The image should have a size")
             } else {
-                XCTFail("An collection with a least 2 images should have a preview image")
+                XCTFail("An collection with at least 2 images should have a preview image")
             }
             expectation.fulfill()
         }
