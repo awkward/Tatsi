@@ -64,4 +64,9 @@ final internal class LocalizableStrings {
         return NSLocalizedString("tatsi-picker.view.album.empty.message", tableName: nil, bundle: self.bundle, value: "Save some photos or videos to your device", comment: "The message of the empty state when an album is empty")
     }
     
+    /// The title of the empty state when the album is loading it's assets
+    static var albumLoading: String {
+        return NSLocalizedString("tatsi-picker.view.album.loading.title", tableName: nil, bundle: self.bundle, value: "Loading...", comment: "The title of the empty state when the album is loading it's assets.")
+    }
+    
 }

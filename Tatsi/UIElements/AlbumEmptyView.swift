@@ -9,6 +9,31 @@
 import UIKit
 
 final internal class AlbumEmptyView: UIView {
+    
+    enum EmptyState {
+        case loading
+        case noAssets
+        
+        var title: String {
+            switch self {
+            case .noAssets:
+                return LocalizableStrings.emptyAlbumTitle
+            case .loading:
+                return LocalizableStrings.albumLoading
+            }
+        }
+        
+        var message: String? {
+            switch self {
+            case .noAssets:
+                return LocalizableStrings.emptyAlbumMessage
+            default:
+                return nil
+            }
+        }
+    }
+    
+    private let state: EmptyState
 
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
@@ -16,7 +41,6 @@ final internal class AlbumEmptyView: UIView {
         label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .title2).withSize(26)
         label.textColor = UIColor.lightGray
-        label.text = LocalizableStrings.emptyAlbumTitle
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -27,7 +51,6 @@ final internal class AlbumEmptyView: UIView {
         label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textColor = UIColor.lightGray
-        label.text = LocalizableStrings.emptyAlbumMessage
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,7 +63,9 @@ final internal class AlbumEmptyView: UIView {
         return stackView
     }()
     
-    init() {
+    init(state: EmptyState = .noAssets) {
+        self.state = state
+        
         super.init(frame: CGRect())
         
         self.setupView()
@@ -52,6 +77,10 @@ final internal class AlbumEmptyView: UIView {
     
     private func setupView() {
         self.addSubview(self.stackView)
+        
+        self.titleLabel.text = self.state.title
+        self.messageLabel.text = self.state.message
+        self.messageLabel.isHidden = self.messageLabel.text == nil
         
         self.setupConstraints()
     }

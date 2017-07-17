@@ -63,9 +63,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
                             collectionView.selectItem(at: IndexPath(item: index + (self.showCameraButton ? 1 : 0), section: 0), animated: false, scrollPosition: UICollectionViewScrollPosition())
                         }
                     }
-                    if collectionView.numberOfItems(inSection: 0) <= 0 {
-                        self.emptyView = AlbumEmptyView()
-                    }
+                    self.emptyView = collectionView.numberOfItems(inSection: 0) <= 0  ? AlbumEmptyView() : nil
                 })
                 
             }
@@ -119,6 +117,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         guard let fetchOptions = self.config?.assetFetchOptions() else {
             return
         }
+        if !self.showCameraButton {
+            self.emptyView = AlbumEmptyView(state: .loading)
+        }
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let strongSelf = self else {
                 return
@@ -129,7 +130,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
                 allAssets.append(asset)
             })
             DispatchQueue.main.async {
-                self?.emptyView = nil
                 if self?.config?.invertUserLibraryOrder == true && strongSelf.album.isUserLibrary {
                     allAssets.reverse()
                 }
