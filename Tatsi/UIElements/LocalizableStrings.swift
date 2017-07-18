@@ -69,4 +69,14 @@ final internal class LocalizableStrings {
         return NSLocalizedString("tatsi-picker.view.album.loading.title", tableName: nil, bundle: self.bundle, value: "Loading...", comment: "The title of the empty state when the album is loading it's assets.")
     }
     
+    /// The title of the camera button
+    static var cameraButtonTitle: String {
+        return NSLocalizedString("tatsi-picker.button.camera.title", tableName: nil, bundle: self.bundle, value: "Camera", comment: "The title of the camera button")
+    }
+    
+    /// The message that the user is alerted of when the selection limit has been reached
+    static var accessibilityAlertSelectionLimitReached: String {
+        return NSLocalizedString("tatsi-picker.accessibility.selection-limit-reached", tableName: nil, bundle: self.bundle, value: "The max number of assets has been selected", comment: "The message that the user is alerted of when the selection limit has been reached")
+    }
+    
 }

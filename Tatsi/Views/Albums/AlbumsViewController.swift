@@ -45,8 +45,13 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableStrings.albumsViewBackButton, style: .plain, target: nil, action: nil)
+        let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
+        self.navigationItem.rightBarButtonItem = cancelButtonItem
+        
+        let backButtonItem = UIBarButtonItem(title: LocalizableStrings.albumsViewBackButton, style: .plain, target: nil, action: nil)
+        backButtonItem.accessibilityIdentifier = "tatsi.button.albums"
+        self.navigationItem.backBarButtonItem = backButtonItem
         
         self.title = LocalizableStrings.albumsViewTitle
     }
@@ -65,6 +70,8 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
         self.tableView.rowHeight = 90
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         self.tableView.separatorStyle = .none
+        
+        self.tableView.accessibilityIdentifier = "tatsi.tableView.albums"
         
         self.startLoadingAlbums()
     }

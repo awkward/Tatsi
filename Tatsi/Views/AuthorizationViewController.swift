@@ -35,6 +35,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         button.setTitle(LocalizableStrings.authorizationViewSettingsButton, for: .normal)
         button.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "tatsi.button.openSettings"
         return button
     }()
     

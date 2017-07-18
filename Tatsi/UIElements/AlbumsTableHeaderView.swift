@@ -33,6 +33,7 @@ final internal class AlbumsTableHeaderView: UITableViewHeaderFooterView {
     internal var title: String? {
         didSet {
             self.label.text = self.title
+            self.accessibilityLabel = self.title
         }
     }
     

@@ -32,6 +32,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             guard self.asset != oldValue else {
                 return
             }
+            self.accessibilityLabel = asset?.accessibilityLabel
             self.shouldUpdateImage = true
         }
     }
@@ -81,6 +82,10 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.metadataView)
         self.contentView.addSubview(self.selectedOverlay)
+        
+        self.accessibilityIdentifier = "tatsi.cell.asset"
+        self.accessibilityTraits = UIAccessibilityTraitImage
+        self.isAccessibilityElement = true
         
         self.setupConstraints()
     }

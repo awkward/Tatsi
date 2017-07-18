@@ -34,6 +34,11 @@ final internal class CameraCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.iconView)
         self.contentView.backgroundColor = UIColor.lightGray
         
+        self.accessibilityIdentifier = "tatsi.cell.camera"
+        self.accessibilityLabel = LocalizableStrings.cameraButtonTitle
+        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.isAccessibilityElement = true
+        
         self.setupConstraints()
     }
     

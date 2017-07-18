@@ -74,6 +74,8 @@ final internal class AlbumTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.albumImageView)
         self.contentView.addSubview(self.labelsStackView)
         
+        self.accessibilityIdentifier = "tatsi.cell.album"
+        
         self.accessoryType = .disclosureIndicator
         
         self.setupConstraints()

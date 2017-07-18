@@ -91,11 +91,16 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         
         self.collectionView?.backgroundColor = .white
         
+        self.collectionView?.accessibilityIdentifier = "tatsi.collectionView.photosGrid"
+        
         self.title = album.localizedTitle
         self.startFetchingAssets()
         
         self.collectionView?.allowsMultipleSelection = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AssetsGridViewController.done(_:)))
+        
+        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AssetsGridViewController.done(_:)))
+        rightBarButtonItem.accessibilityIdentifier = "tatsi.button.done"
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
         NotificationCenter.default.addObserver(self, selector: #selector(AssetsGridViewController.applicationDidBecomeActive(_:)), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -247,6 +252,7 @@ extension AssetsGridViewController {
 
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard self.selectedAssets.count < self.config?.maxNumberOfSelections ?? Int.max else {
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, LocalizableStrings.accessibilityAlertSelectionLimitReached)
             return false
         }
         return true
@@ -256,6 +262,7 @@ extension AssetsGridViewController {
         if let asset = self.asset(for: indexPath) {
             if !self.selectedAssets.contains(asset) {
                 guard self.selectedAssets.count < self.config?.maxNumberOfSelections ?? Int.max else {
+                    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, LocalizableStrings.accessibilityAlertSelectionLimitReached)
                     return
                 }
                 self.selectedAssets.append(asset)
