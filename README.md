@@ -3,7 +3,7 @@
 [![Contact](https://img.shields.io/badge/contact-madeawkward-blue.svg?style=flat)](https://twitter.com/madeawkward)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos
+A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos.
 
 ## Screenshots 
 
@@ -11,7 +11,12 @@ A drop-in replacement for UIImagePickerController with more options and the abil
 ![Camera Roll](Screenshots/camera-roll.png?raw=true)
 ![Selection](Screenshots/camera-roll-selected.png?raw=true)
 
+## Introduction
+
+Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created a customizable image picker for our iOS reddit client called <a href="https://beamreddit.com/" target="_blank">Beam</a>. UIImagePickerController only supports selecting 1 image at a time, but we needed more images in Beam. Tatsi has built in support for selecting multiple images. On top of that, we integrated a camera button directly into the picker. We welcome you to use Tatsi for your own projects.
+
 ## Features
+
 - Multi selection of photos/videos using the photos library
 - Ability to reverse the display order of images/videos
 - Option to show a camera button inside the picker
@@ -27,7 +32,6 @@ A drop-in replacement for UIImagePickerController with more options and the abil
 3. Go to your Project Settings -> General and add Tatsi under Embedded Frameworks
 4. Add `NSPhotoLibraryUsageDescription` to your Info.plist with a proper description.
 5. (Optional) if you want to use the camera option. You will also need to add `NSCameraUsageDescription` to your Info.plist
-
 
 ### Manual
 
@@ -57,3 +61,16 @@ Tatsi = Photos in Planco, the language spoken in the game Planet Coaster. [Sourc
 - [ ] Proper `init?(coder aDecoder: NSCoder)` support
 - [ ] UI Tests
 - [ ] Running Unit Tests on Travis
+
+## Documentation
+
+> We're trying to keep our documentation as updated as possible. Here you can find more information on Tatsi.
+
+## License
+
+> Tatsi is available under the MIT license. See the LICENSE file for more info.
+
+## Links
+
+  - <a href="https://awkward.co/" target="_blank">Awkward</a>
+  - <a href="https://beamreddit.com/" target="_blank">Beam</a>
