@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="Docs/banner.png">
+  <img src="Docs/icon.png" width="136" alt="icon"><br>
   Tatsi<br>
   <p align="center">
   <a href="https://travis-ci.org/awkward/Tatsi">
