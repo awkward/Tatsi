@@ -1,15 +1,26 @@
-# Tatsi
-[![Build Status](https://travis-ci.org/awkward/Tatsi.svg?branch=master)](https://travis-ci.org/awkward/Tatsi)
-[![Contact](https://img.shields.io/badge/contact-madeawkward-blue.svg?style=flat)](https://twitter.com/madeawkward)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<h1 align="center">
+  <img src="Docs/icon.png" width="136" alt="icon"><br>
+  Tatsi<br>
+  <p align="center">
+  <a href="https://travis-ci.org/awkward/Tatsi">
+    <img src="https://travis-ci.org/awkward/Tatsi.svg?branch=master" alt="Build Status">
+  </a>
+  <a href="https://twitter.com/madeawkward">
+    <img src="https://img.shields.io/badge/contact-madeawkward-blue.svg?style=flat" alt="Contact">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+  </a>
+</p>
+</h1>
 
 A drop-in replacement for UIImagePickerController with more options and the ability to select multiple images and/or videos
 
-## Screenshots 
+## Screenshots
 
-![Albums list](Screenshots/albums.png?raw=true)
-![Camera Roll](Screenshots/camera-roll.png?raw=true)
-![Selection](Screenshots/camera-roll-selected.png?raw=true)
+![Albums list](Docs/Screenshots/albums.png?raw=true)
+![Camera Roll](Docs/Screenshots/camera-roll.png?raw=true)
+![Selection](Docs/Screenshots/camera-roll-selected.png?raw=true)
 
 ## Features
 - Multi selection of photos/videos using the photos library
