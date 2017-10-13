@@ -145,17 +145,21 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.imageView.contentMode = UIViewContentMode.center
         self.imageView.image = nil
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            let scale = UIScreen.main.scale > 2 ? 2 : UIScreen.main.scale
-            guard let targetSize = self?.imageSize.scaled(with: scale), self?.asset?.localIdentifier == asset.localIdentifier else {
-                return
-            }
-            self?.currentRequest = imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
-                DispatchQueue.main.async {
-                    guard let image = image, self?.asset?.localIdentifier == asset.localIdentifier else {
-                        return
+            autoreleasepool {
+                let scale = UIScreen.main.scale > 2 ? 2 : UIScreen.main.scale
+                guard let targetSize = self?.imageSize.scaled(with: scale), self?.asset?.localIdentifier == asset.localIdentifier else {
+                    return
+                }
+                self?.currentRequest = imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
+                    DispatchQueue.main.async {
+                        autoreleasepool {
+                            guard let image = image, self?.asset?.localIdentifier == asset.localIdentifier else {
+                                return
+                            }
+                            self?.imageView.contentMode = UIViewContentMode.scaleAspectFill
+                            self?.imageView.image = image
+                        }
                     }
-                    self?.imageView.contentMode = UIViewContentMode.scaleAspectFill
-                    self?.imageView.image = image
                 }
             }
         }
