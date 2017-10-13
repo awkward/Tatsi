@@ -44,6 +44,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     lazy private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -115,14 +116,19 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             return
         }
         self.shouldUpdateImage = false
+        self.startLoadingImage()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.imageView.image = nil
+        
         if let currentRequest = self.currentRequest {
-            var imageManager = PHImageManager.default()
-            if let customImageManager = self.imageManager {
-                imageManager = customImageManager
-            }
+            let imageManager = self.imageManager ?? PHImageManager.default()
             imageManager.cancelImageRequest(currentRequest)
         }
-        self.startLoadingImage()
+
     }
     
     fileprivate func startLoadingImage() {
@@ -130,27 +136,29 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         guard let asset = self.asset else {
             return
         }
-        var imageManager = PHImageManager.default()
-        if let customImageManager = self.imageManager {
-            imageManager = customImageManager
-        }
+        let imageManager = self.imageManager ?? PHImageManager.default()
+        
         let requestOptions = PHImageRequestOptions()
-        requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
+        requestOptions.resizeMode = PHImageRequestOptionsResizeMode.fast
         requestOptions.isSynchronous = false
         
         self.imageView.contentMode = UIViewContentMode.center
         self.imageView.image = nil
-        DispatchQueue.global(qos: .userInteractive).async {
-            self.currentRequest = imageManager.requestImage(for: asset, targetSize: self.imageSize.scaled(with: UIScreen.main.scale), contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            let scale = UIScreen.main.scale > 2 ? 2 : UIScreen.main.scale
+            guard let targetSize = self?.imageSize.scaled(with: scale), self?.asset?.localIdentifier == asset.localIdentifier else {
+                return
+            }
+            self?.currentRequest = imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: PHImageContentMode.aspectFill, options: requestOptions) { (image, _) in
                 DispatchQueue.main.async {
-                    if let image = image {
-                        self.imageView.contentMode = UIViewContentMode.scaleAspectFill
-                        self.imageView.image = image
+                    guard let image = image, self?.asset?.localIdentifier == asset.localIdentifier else {
+                        return
                     }
+                    self?.imageView.contentMode = UIViewContentMode.scaleAspectFill
+                    self?.imageView.image = image
                 }
             }
         }
-        
     }
     
     override var isSelected: Bool {
