@@ -29,7 +29,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     internal var asset: PHAsset? {
         didSet {
             self.metadataView.asset = self.asset
-            guard self.asset != oldValue else {
+            guard self.asset != oldValue || self.imageView.image == nil else {
                 return
             }
             self.accessibilityLabel = asset?.accessibilityLabel
