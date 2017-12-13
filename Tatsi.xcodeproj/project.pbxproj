@@ -37,6 +37,8 @@
 		0C5B61951F0E3E13005A25CE /* PHAssetCollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B61941F0E3E13005A25CE /* PHAssetCollectionExtensions.swift */; };
 		0C5B61971F0E3EDD005A25CE /* CGSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B61961F0E3EDD005A25CE /* CGSizeExtensions.swift */; };
 		0C5B61B31F0FC82D005A25CE /* AlbumsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B61B21F0FC82D005A25CE /* AlbumsTableHeaderView.swift */; };
+		0C76843A1FDEC32200514164 /* AlbumTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7684391FDEC32200514164 /* AlbumTitleView.swift */; };
+		0C7684491FDED59F00514164 /* ChangeAlbumArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7684481FDED59F00514164 /* ChangeAlbumArrowView.swift */; };
 		0CACBE891F13B21C00CD1B32 /* CameraIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACBE881F13B21C00CD1B32 /* CameraIconView.swift */; };
 		0CBB28751F0FE38D00254034 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB28741F0FE38D00254034 /* AuthorizationViewController.swift */; };
 		0CBB28781F12B22D00254034 /* AssetMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB28771F12B22D00254034 /* AssetMetadataView.swift */; };
@@ -117,6 +119,8 @@
 		0C5B61941F0E3E13005A25CE /* PHAssetCollectionExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHAssetCollectionExtensions.swift; sourceTree = "<group>"; };
 		0C5B61961F0E3EDD005A25CE /* CGSizeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSizeExtensions.swift; sourceTree = "<group>"; };
 		0C5B61B21F0FC82D005A25CE /* AlbumsTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableHeaderView.swift; sourceTree = "<group>"; };
+		0C7684391FDEC32200514164 /* AlbumTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTitleView.swift; sourceTree = "<group>"; };
+		0C7684481FDED59F00514164 /* ChangeAlbumArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAlbumArrowView.swift; sourceTree = "<group>"; };
 		0CACBE881F13B21C00CD1B32 /* CameraIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraIconView.swift; sourceTree = "<group>"; };
 		0CBB28741F0FE38D00254034 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		0CBB28771F12B22D00254034 /* AssetMetadataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetMetadataView.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 		0C5B61701F0D23BA005A25CE /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
+				0C7684481FDED59F00514164 /* ChangeAlbumArrowView.swift */,
 				0C5B618A1F0E3924005A25CE /* AlbumImageView.swift */,
 				0C5B618B1F0E3924005A25CE /* SelectionIconView.swift */,
 				0C5B61B21F0FC82D005A25CE /* AlbumsTableHeaderView.swift */,
@@ -276,6 +281,7 @@
 				0CBB287F1F138B4100254034 /* LocalizableStrings.swift */,
 				0CACBE881F13B21C00CD1B32 /* CameraIconView.swift */,
 				0C19D88D1F14C3220087032A /* AlbumEmptyView.swift */,
+				0C7684391FDEC32200514164 /* AlbumTitleView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -540,12 +546,14 @@
 				0C5B61951F0E3E13005A25CE /* PHAssetCollectionExtensions.swift in Sources */,
 				0C5B618D1F0E3924005A25CE /* SelectionIconView.swift in Sources */,
 				0C5B61931F0E39A6005A25CE /* AlbumTableViewCell.swift in Sources */,
+				0C76843A1FDEC32200514164 /* AlbumTitleView.swift in Sources */,
 				0C5B61B31F0FC82D005A25CE /* AlbumsTableHeaderView.swift in Sources */,
 				0C5B617D1F0E32C0005A25CE /* TatsiConfig.swift in Sources */,
 				0C5B61911F0E39A3005A25CE /* AlbumsViewController.swift in Sources */,
 				0C5B617F1F0E3521005A25CE /* TatsiPickerViewControllerDelegate.swift in Sources */,
 				0C5B61851F0E3681005A25CE /* CameraCollectionViewCell.swift in Sources */,
 				0C5B61841F0E3681005A25CE /* AssetCollectionViewCell.swift in Sources */,
+				0C7684491FDED59F00514164 /* ChangeAlbumArrowView.swift in Sources */,
 				0CBB287E1F1389A800254034 /* TypeIcons.swift in Sources */,
 				0CACBE891F13B21C00CD1B32 /* CameraIconView.swift in Sources */,
 				0C5B618C1F0E3924005A25CE /* AlbumImageView.swift in Sources */,
@@ -735,7 +743,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.awkward.tatsi-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -751,7 +759,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.awkward.tatsi-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -773,7 +781,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Tatsi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.tatsi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -800,7 +808,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Tatsi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.tatsi;
 				PRODUCT_NAME = "$(TARGET_NAME)";

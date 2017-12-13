@@ -13,7 +13,18 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     // MARK: - Internal Properties
     
-    internal let album: PHAssetCollection
+    internal var album: PHAssetCollection {
+        didSet {
+            guard self.album != oldValue else {
+                return
+            }
+            self.selectedAssets = []
+            self.assets = []
+            self.collectionView?.reloadData()
+            
+            self.configureForNewAlbum()
+        }
+    }
     
     internal fileprivate(set) var selectedAssets = [PHAsset]()
     
@@ -46,6 +57,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     /// If the user scrolled the grid by dragging
     fileprivate var userScrolled = false
+    
+    /// When the album view is animating in. Only used when the config is set to "SingleViewMode".
+    fileprivate var animatingAlbumView = false
     
     fileprivate var assets: [PHAsset]? {
         didSet {
@@ -93,19 +107,36 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         
         self.collectionView?.accessibilityIdentifier = "tatsi.collectionView.photosGrid"
         
-        self.title = album.localizedTitle
-        self.startFetchingAssets()
+        self.configureForNewAlbum()
         
         self.collectionView?.allowsMultipleSelection = true
         
-        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AssetsGridViewController.done(_:)))
+        let rightBarButtonItem = self.pickerViewController?.customDoneButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+        rightBarButtonItem.target = self
+        rightBarButtonItem.action = #selector(AssetsGridViewController.done(_:))
         rightBarButtonItem.accessibilityIdentifier = "tatsi.button.done"
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
         
         NotificationCenter.default.addObserver(self, selector: #selector(AssetsGridViewController.applicationDidBecomeActive(_:)), name: .UIApplicationDidBecomeActive, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let isRootModalViewController = self.navigationController?.viewControllers.first == self && self.presentingViewController != nil
+        
+        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+        cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancel(_:))
+        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
+        
+        self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
+    }
+    
     // MARK: - Actions
+    
+    @objc fileprivate func cancel(_ sender: AnyObject) {
+        self.cancelPicking()
+    }
     
     @objc fileprivate func done(_ sender: AnyObject) {
         let selectedAssets = self.selectedAssets
@@ -113,6 +144,82 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             self.cancelPicking()
         } else {
             self.finishPicking(with: selectedAssets)
+        }
+    }
+    
+    @objc fileprivate func changeAlbum(_ sender: AnyObject) {
+        guard let titleView = self.navigationItem.titleView as? AlbumTitleView, !self.animatingAlbumView else {
+            return
+        }
+        let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {
+            titleView.flipArrow = !titleView.flipArrow
+        }
+        if !titleView.flipArrow {
+            self.showAlbumsViews(animator: animator)
+        } else {
+            self.hideAlbumsViews(animator: animator)
+        }
+        animator.addCompletion { (_) in
+            self.animatingAlbumView = false
+        }
+        self.animatingAlbumView = true
+        animator.startAnimation()
+    }
+    
+    // MARK: - Albums list management
+    
+    fileprivate func showAlbumsViews(animator: UIViewPropertyAnimator) {
+        guard self.childViewControllers.isEmpty else {
+            return
+        }
+        let albumsViewController = AlbumsViewController()
+        albumsViewController.delegate = self
+
+        self.addChildViewController(albumsViewController)
+        var frame = self.view.bounds
+        frame.origin.y -= frame.height
+        albumsViewController.view.frame = frame
+        if #available(iOS 11, *) {
+            albumsViewController.tableView.contentInset = UIEdgeInsets()
+            albumsViewController.tableView.scrollIndicatorInsets = UIEdgeInsets()
+        } else {
+            albumsViewController.tableView.contentInset = self.collectionView?.contentInset ?? UIEdgeInsets()
+            albumsViewController.tableView.scrollIndicatorInsets = self.collectionView?.contentInset ?? UIEdgeInsets()
+        }
+        self.view.addSubview(albumsViewController.view)
+        albumsViewController.didMove(toParentViewController: self)
+        
+        animator.addAnimations {
+            albumsViewController.view.frame = self.view.bounds
+        }
+    }
+    
+    fileprivate func hideAlbumsViews(animator: UIViewPropertyAnimator) {
+        guard let albumsViewController = self.childViewControllers.first as? AlbumsViewController else {
+            return
+        }
+        animator.addAnimations {
+            var frame = self.view.bounds
+            frame.origin.y -= frame.height
+            albumsViewController.view.frame = frame
+        }
+        animator.addCompletion { (_) in
+            albumsViewController.removeFromParentViewController()
+            albumsViewController.view.removeFromSuperview()
+            albumsViewController.didMove(toParentViewController: nil)
+        }
+    }
+    
+    fileprivate func configureForNewAlbum() {
+        self.title = self.album.localizedTitle
+        self.startFetchingAssets()
+        
+        if self.config?.singleViewMode ?? false {
+            let titleView = AlbumTitleView()
+            titleView.title = self.album.localizedTitle
+            titleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
+            titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)
+            self.navigationItem.titleView = titleView
         }
     }
     
@@ -294,6 +401,27 @@ extension AssetsGridViewController {
 
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.userScrolled = true
+    }
+    
+}
+
+// MARK: - AlbumsViewControllerDelegate
+
+extension AssetsGridViewController: AlbumsViewControllerDelegate {
+    
+    func albumsViewController(_ albumsViewController: AlbumsViewController, didSelectAlbum album: PHAssetCollection) {
+        let titleView = self.navigationItem.titleView as? AlbumTitleView
+        
+        self.album = album
+        let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {
+            titleView?.flipArrow = false
+        }
+        self.hideAlbumsViews(animator: animator)
+        animator.addCompletion { (_) in
+            self.animatingAlbumView = false
+        }
+        self.animatingAlbumView = true
+        animator.startAnimation()
     }
     
 }
