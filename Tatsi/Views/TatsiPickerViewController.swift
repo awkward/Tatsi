@@ -37,15 +37,21 @@ final public class TatsiPickerViewController: UINavigationController {
         case .authorized:
             //Authorized, show the album view or the album detail view.
             var album: PHAssetCollection?
+            let userLibrary = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject
             switch self.config.firstView {
             case .userLibrary:
-                 album = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject
+                 album = userLibrary
             case .album(let collection):
                 album = collection
             default:
                 break
             }
-            self.showAlbumViewController(with: album)
+            if let initialAlbum = album ?? userLibrary, self.config.singleViewMode {
+                self.viewControllers = [AssetsGridViewController(album: initialAlbum)]
+            } else {
+                self.showAlbumViewController(with: album)
+            }
+            
         case .denied, .notDetermined, .restricted:
             // Not authorized, show the view to give access
             self.viewControllers = [AuthorizationViewController()]
@@ -58,6 +64,14 @@ final public class TatsiPickerViewController: UINavigationController {
         } else {
             self.viewControllers = [AlbumsViewController()]
         }
+    }
+    
+    internal func customCancelButtonItem() -> UIBarButtonItem? {
+        return self.pickerDelegate?.cancelBarButtonItem(for: self)
+    }
+    
+    internal func customDoneButtonItem() -> UIBarButtonItem? {
+        return self.pickerDelegate?.doneBarButtonItem(for: self)
     }
 
 }

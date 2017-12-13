@@ -9,7 +9,23 @@
 import UIKit
 import Photos
 
+internal protocol AlbumsViewControllerDelegate: class {
+    
+    /// Called when an album is selected in the album list.
+    ///
+    /// - Parameters:
+    ///   - albumsViewController: The AlbumsViewController in which the album was selected.
+    ///   - album: The selected album.
+    func albumsViewController(_ albumsViewController: AlbumsViewController, didSelectAlbum album: PHAssetCollection)
+    
+}
+
 final internal class AlbumsViewController: UITableViewController, PickerViewController {
+    
+    // MARK: - Public Properties
+    
+    /// Set the delegate in order to recieve a callback when the user selects an album.
+    weak var delegate: AlbumsViewControllerDelegate?
     
     // MARK: - Private Properties
     
@@ -37,6 +53,9 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
         if #available(iOS 10.2, *), let index = smartAlbumSortingOrder.index(of: .smartAlbumBursts) {
             smartAlbumSortingOrder.insert(.smartAlbumDepthEffect, at: index)
         }
+        if #available(iOS 11, *), let index = smartAlbumSortingOrder.index(of: .smartAlbumAllHidden) {
+            smartAlbumSortingOrder.insert(.smartAlbumAnimated, at: index)
+        }
         return smartAlbumSortingOrder
     }()
     
@@ -45,7 +64,9 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancel(_:))
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
         self.navigationItem.rightBarButtonItem = cancelButtonItem
         
@@ -159,6 +180,7 @@ extension AlbumsViewController {
         }
         cell.album = self.album(for: indexPath)
         cell.reloadContents(with: self.config?.assetFetchOptions())
+        cell.accessoryType = (self.config?.singleViewMode ?? false) ? .none : .disclosureIndicator
         return cell
     }
     
@@ -172,8 +194,12 @@ extension AlbumsViewController {
         guard let album = self.album(for: indexPath) else {
             return
         }
-        let gridViewController = AssetsGridViewController(album: album)
-        self.navigationController?.pushViewController(gridViewController, animated: true)
+        if let delegate = self.delegate {
+            delegate.albumsViewController(self, didSelectAlbum: album)
+        } else {
+            let gridViewController = AssetsGridViewController(album: album)
+            self.navigationController?.pushViewController(gridViewController, animated: true)
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
