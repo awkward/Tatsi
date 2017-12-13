@@ -96,6 +96,9 @@ public struct TatsiConfig {
             if #available(iOS 10.3, *) {
                 bannedAlbumSubtypes.append(.smartAlbumLivePhotos)
             }
+            if #available(iOS 11, *) {
+                bannedAlbumSubtypes.append(.smartAlbumAnimated)
+            }
         }
         
         return bannedAlbumSubtypes
