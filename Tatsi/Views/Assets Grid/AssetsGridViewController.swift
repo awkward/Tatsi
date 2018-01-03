@@ -26,7 +26,11 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    internal fileprivate(set) var selectedAssets = [PHAsset]()
+    internal fileprivate(set) var selectedAssets = [PHAsset]() {
+        didSet {
+            self.reloadDoneButtonState()
+        }
+    }
     
     // MARK: - Private Properties
     
@@ -84,6 +88,14 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
+    lazy fileprivate var doneButton: UIBarButtonItem = {
+        let buttonitem = self.pickerViewController?.customDoneButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+        buttonitem.target = self
+        buttonitem.action = #selector(AssetsGridViewController.done(_:))
+        buttonitem.accessibilityIdentifier = "tatsi.button.done"
+        return buttonitem
+    }()
+    
     // MARK: - Initializers
     
     init(album: PHAssetCollection) {
@@ -111,11 +123,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         
         self.collectionView?.allowsMultipleSelection = true
         
-        let rightBarButtonItem = self.pickerViewController?.customDoneButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
-        rightBarButtonItem.target = self
-        rightBarButtonItem.action = #selector(AssetsGridViewController.done(_:))
-        rightBarButtonItem.accessibilityIdentifier = "tatsi.button.done"
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationItem.rightBarButtonItem = self.doneButton
         
         NotificationCenter.default.addObserver(self, selector: #selector(AssetsGridViewController.applicationDidBecomeActive(_:)), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -190,6 +198,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         albumsViewController.didMove(toParentViewController: self)
         
         animator.addAnimations {
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
             albumsViewController.view.frame = self.view.bounds
         }
     }
@@ -199,6 +209,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             return
         }
         animator.addAnimations {
+            self.navigationItem.leftBarButtonItem?.isEnabled = true
+            self.reloadDoneButtonState()
+            
             var frame = self.view.bounds
             frame.origin.y -= frame.height
             albumsViewController.view.frame = frame
@@ -214,6 +227,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         self.title = self.album.localizedTitle
         self.startFetchingAssets()
         
+        self.reloadDoneButtonState()
+        
         if self.config?.singleViewMode ?? false {
             let titleView = AlbumTitleView()
             titleView.title = self.album.localizedTitle
@@ -221,6 +236,12 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)
             self.navigationItem.titleView = titleView
         }
+    }
+    
+    // MARK: - Button state
+    
+    fileprivate func reloadDoneButtonState() {
+        self.doneButton.isEnabled = !self.selectedAssets.isEmpty
     }
     
     // MARK: - Fetching
