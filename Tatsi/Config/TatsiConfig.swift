@@ -116,13 +116,13 @@ public struct TatsiConfig {
         
         var predicates = [NSPredicate]()
         
-        let mediaTypePredicates = self.supportedMediaTypes.flatMap({ (mediaType) -> NSPredicate? in
+        let mediaTypePredicates = self.supportedMediaTypes.compactMap({ (mediaType) -> NSPredicate? in
             return NSPredicate(format: "(mediaType == %ld)", mediaType.rawValue)
         })
         predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: mediaTypePredicates))
         
         if let mediaSubtypes = self.supportedMediaSubTypes {
-            let mediaSubtypePredicates = mediaSubtypes.flatMap({ (mediaSubtype) -> NSPredicate? in
+            let mediaSubtypePredicates = mediaSubtypes.compactMap({ (mediaSubtype) -> NSPredicate? in
                 return NSPredicate(format: "mediaSubtype == %d", mediaSubtype.rawValue)
             })
             predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: mediaSubtypePredicates))
