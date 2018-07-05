@@ -14,6 +14,7 @@ final class AlbumTitleView: UIControl {
     /// The title that should be displayed. This can be the name of the album.
     var title: String? {
         didSet {
+            self.accessibilityLabel = self.title
             self.titleLabel.text = self.title
         }
     }
@@ -26,6 +27,7 @@ final class AlbumTitleView: UIControl {
             }
             let radians: CGFloat = 180 * (CGFloat.pi / 180)
             self.arrowIconView.transform = self.flipArrow ? CGAffineTransform(rotationAngle: radians) : .identity
+            self.accessibilityHint = self.flipArrow ? LocalizableStrings.accessibilityActivateToHideAlbumList : LocalizableStrings.accessibilityActivateToShowAlbumList
         }
     }
     
@@ -34,6 +36,7 @@ final class AlbumTitleView: UIControl {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         label.isUserInteractionEnabled = false
+        label.isAccessibilityElement = false
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,6 +44,7 @@ final class AlbumTitleView: UIControl {
     lazy fileprivate var arrowIconView: ChangeAlbumArrowView = {
         let imageView = ChangeAlbumArrowView()
         imageView.isUserInteractionEnabled = false
+        imageView.isAccessibilityElement = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -51,6 +55,7 @@ final class AlbumTitleView: UIControl {
         label.textColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 10)
         label.isUserInteractionEnabled = false
+        label.isAccessibilityElement = false
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -69,6 +74,10 @@ final class AlbumTitleView: UIControl {
         self.addSubview(self.titleLabel)
         self.addSubview(self.arrowIconView)
         self.addSubview(self.directionLabel)
+        
+        self.isAccessibilityElement = true
+        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.accessibilityHint = LocalizableStrings.accessibilityActivateToShowAlbumList
     }
     
     override func layoutSubviews() {

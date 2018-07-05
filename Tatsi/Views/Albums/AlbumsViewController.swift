@@ -97,6 +97,20 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
         self.startLoadingAlbums()
     }
     
+    // MARK: - Accessibility
+    
+    public override func accessibilityPerformEscape() -> Bool {
+        if self.config?.singleViewMode == true {
+            return false
+        } else {
+            self.cancelPicking()
+            if self.pickerViewController?.pickerDelegate == nil {
+                self.dismiss(animated: true, completion: nil)
+            }
+            return true
+        }
+    }
+    
     // MARK: - Fetching
     
     fileprivate func startLoadingAlbums() {

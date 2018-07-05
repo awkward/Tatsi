@@ -79,4 +79,19 @@ final internal class LocalizableStrings {
         return NSLocalizedString("tatsi-picker.accessibility.selection-limit-reached", tableName: nil, bundle: self.bundle, value: "The max number of assets has been selected", comment: "The message that the user is alerted of when the selection limit has been reached")
     }
     
+    /// The image count in an album, for accessibility users
+    static var accessibilityAlbumImagesCount: String {
+        return NSLocalizedString("tatsi-picker.accessibility.images-count", tableName: nil, bundle: self.bundle, value: "%d Images", comment: "The image count in an album, for accessibility users")
+    }
+    
+    /// The accessibility hint the user gets on the album switcher to close/hide the album list
+    static var accessibilityActivateToHideAlbumList: String {
+        return NSLocalizedString("tatsi-picker.accessibility.activate-to-hide-album-list", tableName: nil, bundle: self.bundle, value: "Activate to hide album list", comment: "The accessibility hint the user gets on the album switcher")
+    }
+    
+    /// The accessibility hint the user gets on the album switcher to show/open the album list
+    static var accessibilityActivateToShowAlbumList: String {
+        return NSLocalizedString("tatsi-picker.accessibility.activate-to-show-album-list", tableName: nil, bundle: self.bundle, value: "Activate to show album list", comment: "The accessibility hint the user gets on the album switcher")
+    }
+    
 }

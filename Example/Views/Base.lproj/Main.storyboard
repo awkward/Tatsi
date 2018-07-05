@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,20 +22,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="50u-FM-ddp">
-                                <rect key="frame" x="79" y="298.5" width="217" height="70"/>
+                                <rect key="frame" x="80" y="278.5" width="215" height="110"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZH-ey-tdq">
-                                        <rect key="frame" x="0.0" y="0.0" width="217" height="30"/>
-                                        <state key="normal" title="Show UIImagePickerController"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="30"/>
+                                        <state key="normal" title="Show UIKit Picker"/>
                                         <connections>
-                                            <action selector="showUIImagePicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OQv-TT-hb1"/>
+                                            <action selector="showUIKitPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKm-Vt-U9t"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PS-rH-el7">
-                                        <rect key="frame" x="0.0" y="40" width="217" height="30"/>
-                                        <state key="normal" title="Show TatsiPickerViewController"/>
+                                        <rect key="frame" x="0.0" y="40" width="215" height="30"/>
+                                        <state key="normal" title="Show Tatsi Picker"/>
                                         <connections>
-                                            <action selector="showPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5GX-gy-fEP"/>
+                                            <action selector="showTatsiPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ReA-El-bFN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4F-pv-cIX">
+                                        <rect key="frame" x="0.0" y="80" width="215" height="30"/>
+                                        <state key="normal" title="Show Tatsi Picker (Single View)"/>
+                                        <connections>
+                                            <action selector="showSingleViewTatsiPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OKE-KL-ZPV"/>
                                         </connections>
                                     </button>
                                 </subviews>

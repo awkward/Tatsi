@@ -12,18 +12,30 @@ import Photos
 
 final class ViewController: UIViewController {
     
-    @IBAction private func showUIImagePicker(_ sender: Any) {
+    @IBAction private func showUIKitPicker(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         self.present(imagePickerController, animated: true, completion: nil)
     }
     
-    @IBAction private func showPicker(_ sender: Any) {
+    @IBAction private func showTatsiPicker(_ sender: Any) {
         var config = TatsiConfig.default
         config.showCameraOption = true
         config.supportedMediaTypes = [.video, .image]
         config.firstView = .userLibrary
         config.maxNumberOfSelections = 2
+        
+        let pickerViewController = TatsiPickerViewController(config: config)
+        pickerViewController.pickerDelegate = self
+        self.present(pickerViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction private func showSingleViewTatsiPicker(_ sender: Any) {
+        var config = TatsiConfig.default
+        config.singleViewMode = true
+        config.showCameraOption = true
+        config.supportedMediaTypes = [.video, .image]
+        config.firstView = .userLibrary
         
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self

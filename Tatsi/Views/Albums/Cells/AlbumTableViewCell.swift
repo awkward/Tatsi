@@ -114,11 +114,15 @@ final internal class AlbumTableViewCell: UITableViewCell {
             self.countLabel.text = "0"
         }
         
+        self.accessibilityLabel = self.album?.localizedTitle
+        self.accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
+        
         self.album?.fetchNumberOfItems(for: fetchOptions, completionHandler: { [weak self] (count, collection) in
             guard let strongSelf = self, collection == strongSelf.album else {
                 return
             }
             self?.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
+            self?.accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
         })
 
         

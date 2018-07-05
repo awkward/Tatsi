@@ -32,6 +32,13 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
+    var showingAlbums: Bool {
+        guard self.config?.singleViewMode == true, let titleView = self.navigationItem.titleView as? AlbumTitleView else {
+            return false
+        }
+        return titleView.flipArrow
+    }
+    
     // MARK: - Private Properties
     
     fileprivate var showCameraButton: Bool {
@@ -140,6 +147,21 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
     }
     
+    // MARK: - Accessibility
+    
+    public override func accessibilityPerformEscape() -> Bool {
+        if showingAlbums {
+            self.changeAlbum(nil)
+        } else {
+            if self.config?.singleViewMode == true {
+                self.cancelPicking()
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        return true
+    }
+    
     // MARK: - Actions
     
     @objc fileprivate func cancel(_ sender: AnyObject) {
@@ -155,7 +177,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    @objc fileprivate func changeAlbum(_ sender: AnyObject) {
+    @objc fileprivate func changeAlbum(_ sender: AnyObject?) {
         guard let titleView = self.navigationItem.titleView as? AlbumTitleView, !self.animatingAlbumView else {
             return
         }
@@ -169,6 +191,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
         animator.addCompletion { (_) in
             self.animatingAlbumView = false
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil)
         }
         self.animatingAlbumView = true
         animator.startAnimation()
