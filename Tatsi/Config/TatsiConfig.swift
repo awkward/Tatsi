@@ -33,7 +33,7 @@ public struct TatsiConfig {
     }
     
     /// All media types that the picker displays. Defaults to images and videos.
-    public var supportedMediaTypes: [PHAssetMediaType] = [PHAssetMediaType.image, PHAssetMediaType.video]
+    public var supportedMediaTypes: Set<PHAssetMediaType> = [PHAssetMediaType.image, PHAssetMediaType.video]
     
     /// Can be used to filter out certain photo or video types. Such as Panoramas, slomo videos, screenshots or live photos. Defaults to no filtering
     public var supportedMediaSubTypes: [PHAssetMediaSubtype]?
@@ -109,9 +109,6 @@ public struct TatsiConfig {
     
     /// Creates and returns the fetch options to use for fetching assets based on the config. Nil if the fetchOptions are not needed.
     internal func assetFetchOptions() -> PHFetchOptions? {
-        guard self.supportedMediaTypes.contains(.image) && self.supportedMediaTypes.contains(.video) && self.supportedMediaSubTypes == nil else {
-            return nil
-        }
         let fetchOptions = PHFetchOptions()
         
         var predicates = [NSPredicate]()
