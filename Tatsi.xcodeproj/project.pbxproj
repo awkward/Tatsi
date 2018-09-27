@@ -196,7 +196,6 @@
 				0C5B61461F0D2293005A25CE /* AppDelegate.swift */,
 				0C5B61521F0D2293005A25CE /* Info.plist */,
 				0C5B61731F0D2403005A25CE /* Resources */,
-				0C5B61721F0D23F6005A25CE /* UIElements */,
 				0C5B61711F0D23F3005A25CE /* Views */,
 			);
 			path = Example;
@@ -209,9 +208,7 @@
 				0C5B615F1F0D231D005A25CE /* Tatsi.h */,
 				0C5B616C1F0D2397005A25CE /* Config */,
 				0C5B616B1F0D2392005A25CE /* Extensions */,
-				0C5B616E1F0D23AC005A25CE /* Models */,
 				0C5B616A1F0D238D005A25CE /* Protocols */,
-				0C5B616D1F0D23A0005A25CE /* Resources */,
 				0C5B61701F0D23BA005A25CE /* UIElements */,
 				0C5B616F1F0D23B3005A25CE /* Views */,
 			);
@@ -242,20 +239,6 @@
 				0C5B617C1F0E32C0005A25CE /* TatsiConfig.swift */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		0C5B616D1F0D23A0005A25CE /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		0C5B616E1F0D23AC005A25CE /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		0C5B616F1F0D23B3005A25CE /* Views */ = {
@@ -294,13 +277,6 @@
 				0C5B61481F0D2293005A25CE /* ViewController.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		0C5B61721F0D23F6005A25CE /* UIElements */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UIElements;
 			sourceTree = "<group>";
 		};
 		0C5B61731F0D2403005A25CE /* Resources */ = {
