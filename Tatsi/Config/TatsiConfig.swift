@@ -68,7 +68,7 @@ public struct TatsiConfig {
     /// If the order of photos in the user library (all photos/camera roll) should be inverted.
     public var invertUserLibraryOrder: Bool = false
     
-    /// If the delegate should finish immediatelly when maxNumberOfSelections is set to 1 and the user selects a photo
+    /// If the delegate should finish immediately when maxNumberOfSelections is set to 1 and the user selects a photo
     public var finishImmediatelyWithMaximumOfOne: Bool = true
     
     // MARK: - Internal features
