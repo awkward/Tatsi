@@ -417,7 +417,7 @@ extension AssetsGridViewController {
                     return
                 }
                 self.selectedAssets.append(asset)
-                if let maxSelection = self.config?.maxNumberOfSelections, maxSelection == 1 {
+                if let maxSelection = self.config?.maxNumberOfSelections, maxSelection == 1, self.config?.finishImmediatelyWithMaximumOfOne != false {
                     self.finishPicking(with: self.selectedAssets)
                 }
             }
