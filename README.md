@@ -33,6 +33,10 @@ Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created 
 - Option to show a camera button inside the picker
 - Assigning a max limit for the number of photos and videos
 - Choosing the first view the user sees
+- Ability to display the picker in a single view, merging the album view with the assets collection
+- Accessibility (voice-over and switch control) is supported
+- Easily Localizable
+- Support for smart albums, user created albums and iCloud shared albums
 
 ## Installation
 
