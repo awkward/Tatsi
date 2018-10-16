@@ -134,9 +134,11 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
             newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewMyAlbumsHeader, albums: userAlbums))
         }
         
-        let sharedAlbums = self.fetchSharedAlbums()
-        if !sharedAlbums.isEmpty {
-            newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewSharedAlbumsHeader, albums: sharedAlbums))
+        if self.config?.showSharedAlbums == true {
+            let sharedAlbums = self.fetchSharedAlbums()
+            if !sharedAlbums.isEmpty {
+                newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewSharedAlbumsHeader, albums: sharedAlbums))
+            }
         }
         self.categories = newCategories
     }
