@@ -24,9 +24,14 @@ final internal class LocalizableStrings {
         return NSLocalizedString("tatsi-picker.view.albums.back-button", tableName: nil, bundle: self.bundle, value: "Albums", comment: "The title of the back button leading to the albums view")
     }
     
-    /// The title of the header on the albums view
+    /// The title of the user albums header on the albums view
     static var albumsViewMyAlbumsHeader: String {
-        return NSLocalizedString("tatsi-picker.view.albums.my-albums.header", tableName: nil, bundle: self.bundle, value: "My Albums", comment: "The title of the header on the albums view")
+        return NSLocalizedString("tatsi-picker.view.albums.my-albums.header", tableName: nil, bundle: self.bundle, value: "My Albums", comment: "The title of the user albums header on the albums view")
+    }
+    
+    /// The title of the (iCloud) shared albums header on the albums view
+    static var albumsViewSharedAlbumsHeader: String {
+        return NSLocalizedString("tatsi-picker.view.albums.shared-albums.header", tableName: nil, bundle: self.bundle, value: "Shared Albums", comment: "The title of the (iCloud) shared albums header on the albums view")
     }
     
     /// The title for the message when the picker has no access to photos
