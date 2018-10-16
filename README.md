@@ -68,6 +68,11 @@ Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created 
 5. Set the `pickerDelegate` on `TatsiPickerViewController`
 6. Present the `TatsiPickerViewController`
 
+
+## Localization
+
+Tatsi is localized in English by default but you can provide your own localization in your project. Simple include the keys in your project's localizable strings. For more information see [Localization](https://github.com/awkward/Tatsi/wiki/Localization) on the Wiki
+
 ## Misc
 
 ### Origin of name
