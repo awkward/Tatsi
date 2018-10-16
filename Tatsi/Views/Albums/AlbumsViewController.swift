@@ -22,6 +22,16 @@ internal protocol AlbumsViewControllerDelegate: class {
 
 final internal class AlbumsViewController: UITableViewController, PickerViewController {
     
+    /// A category in which a album lives. These categories are displayed as sections in the table view.
+    internal struct AlbumCategory {
+        
+        /// The title that should be displayed in the header above the albums.
+        var headerTitle: String?
+        
+        /// The albums that should be displayed for the category.
+        let albums: [PHAssetCollection]
+    }
+    
     // MARK: - Public Properties
     
     /// Set the delegate in order to recieve a callback when the user selects an album.
@@ -29,9 +39,8 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     // MARK: - Private Properties
     
-    fileprivate var smartAlbums: [PHAssetCollection] = []
-    
-    fileprivate var userAlbums: [PHAssetCollection] = []
+    /// The categories of albums to display in the album list. These translate to the sections in the table view.
+    fileprivate var categories: [AlbumCategory] = []
     
     lazy fileprivate var smartAlbumSortingOrder: [PHAssetCollectionSubtype] = {
         var smartAlbumSortingOrder = [
@@ -114,38 +123,75 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     // MARK: - Fetching
     
     fileprivate func startLoadingAlbums() {
-        var smartAlbums = [PHAssetCollection]()
+        var newCategories = [AlbumCategory]()
+        let smartAlbums = self.fetchSmartAlbums()
+        if !smartAlbums.isEmpty {
+            newCategories.append(AlbumCategory(headerTitle: nil, albums: smartAlbums))
+        }
         
-        let smartAlbumResults = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.albumRegular, options: nil)
-        smartAlbumResults.enumerateObjects({ (collection, _, _) in
+        let userAlbums = self.fetchUserAlbums()
+        if !userAlbums.isEmpty {
+            newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewMyAlbumsHeader, albums: userAlbums))
+        }
+        
+        if self.config?.showSharedAlbums == true {
+            let sharedAlbums = self.fetchSharedAlbums()
+            if !sharedAlbums.isEmpty {
+                newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewSharedAlbumsHeader, albums: sharedAlbums))
+            }
+        }
+        self.categories = newCategories
+    }
+    
+    fileprivate func fetchSmartAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.albumRegular, options: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
             guard self.config?.isCollectionAllowed(collection) == true else {
                 return
             }
-            smartAlbums.append(collection)
+            collections.append(collection)
         })
-        smartAlbums.sort { (collection1, collection2) -> Bool in
+        collections.sort { (collection1, collection2) -> Bool in
             guard let index1 = self.smartAlbumSortingOrder.index(of: collection1.assetCollectionSubtype), let index2 = self.smartAlbumSortingOrder.index(of: collection2.assetCollectionSubtype) else {
                 return true
             }
             return index1 < index2
         }
-        self.smartAlbums = smartAlbums
-
-        var albums = [PHAssetCollection]()
-        let albumResults = PHCollectionList.fetchTopLevelUserCollections(with: nil)
-        albumResults.enumerateObjects({ (collection, _, _) in
+        return collections
+    }
+    
+    fileprivate func fetchUserAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
             guard let assetCollection = collection as? PHAssetCollection, self.config?.isCollectionAllowed(collection) == true else {
                 return
             }
-            albums.append(assetCollection)
+            collections.append(assetCollection)
         })
-        albums.sort { (collection1, collection2) -> Bool in
-            guard let startDate1 = collection1.localizedTitle, let startDate2 = collection2.localizedTitle else {
+        collections.sort { (collection1, collection2) -> Bool in
+            guard let title1 = collection1.localizedTitle, let title2 = collection2.localizedTitle else {
                 return false
             }
-            return startDate1.compare(startDate2) == .orderedDescending
+            return title1.compare(title2) == .orderedDescending
         }
-        self.userAlbums = albums
+        return collections
+    }
+    
+    fileprivate func fetchSharedAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
+            collections.append(collection)
+        })
+        collections.sort { (collection1, collection2) -> Bool in
+            guard let title1 = collection1.localizedTitle, let title2 = collection2.localizedTitle else {
+                return false
+            }
+            return title1.compare(title2) == .orderedDescending
+        }
+        return collections
     }
     
     // MARK: - Actions
@@ -156,15 +202,18 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     // MARK: - Helpers
     
-    fileprivate func album(for indexPath: IndexPath) -> PHAssetCollection? {
-        switch indexPath.section {
-        case 0:
-            return self.smartAlbums[indexPath.row]
-        case 1:
-            return self.userAlbums[indexPath.row]
-        default:
+    fileprivate func category(for section: Int) -> AlbumCategory? {
+        guard section < self.categories.count else {
             return nil
         }
+        return self.categories[section]
+    }
+    
+    fileprivate func album(for indexPath: IndexPath) -> PHAssetCollection? {
+        guard let category = self.category(for: indexPath.section), indexPath.row < category.albums.count else {
+            return nil
+        }
+        return category.albums[indexPath.row]
     }
     
 }
@@ -174,18 +223,11 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
 extension AlbumsViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return self.categories.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return self.smartAlbums.count
-        case 1:
-            return self.userAlbums.count
-        default:
-            return 0
-        }
+        return self.category(for: section)?.albums.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -217,18 +259,18 @@ extension AlbumsViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 1 else {
+        guard let category = self.category(for: section) else {
             return nil
         }
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AlbumsTableHeaderView.reuseIdentifier) as? AlbumsTableHeaderView else {
             fatalError("AlbumsTableHeaderView probably not registered")
         }
-        headerView.title = LocalizableStrings.albumsViewMyAlbumsHeader
+        headerView.title = category.headerTitle
         return headerView
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section == 1 else {
+        guard self.category(for: section)?.headerTitle != nil else {
             return 0
         }
         return AlbumsTableHeaderView.height

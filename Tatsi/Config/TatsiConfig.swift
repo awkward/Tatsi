@@ -56,6 +56,9 @@ public struct TatsiConfig {
     /// If the picker should show empty albums. Defaults to false.
     public var showEmptyAlbums = false
     
+    /// If the picker should display shared (iCloud) albums. Defaults to true.
+    public var showSharedAlbums = true
+    
     /// If the picker should be a single view. This means the picker will open on the user library or a specific album. Switching can be done by tapping the on the header.
     public var singleViewMode = false
     
