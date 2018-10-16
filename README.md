@@ -68,6 +68,30 @@ Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created 
 5. Set the `pickerDelegate` on `TatsiPickerViewController`
 6. Present the `TatsiPickerViewController`
 
+### Localization
+
+Tatsi comes localized to English only but you can provide localization for other languages in your project. Just add the following localized strings for the language you want Tatsi to support
+
+| Key        | English |
+| ------------- |-------------|
+|tatsi-picker.view.albums.title | Photos | 
+|tatsi-picker.view.albums.back-button | Albums | 
+|tatsi-picker.view.albums.my-albums.header | My albums | 
+|tatsi-picker.view.authorization.no-access.title | Access denied | 
+|tatsi-picker.view.authorization.no-access.message | Please allow access to photos in the Settings app | 
+|tatsi-picker.view.authorization.button.settings | Open Settings | 
+|tatsi-picker.view.authorization.requesting-access.title | Requesting Access | 
+|tatsi-picker.view.authorization.requesting-access.message | Tap allow to give access to your photos library | 
+|tatsi-picker.view.album.empty.title | No Photos or Videos | 
+|tatsi-picker.view.album.empty.message | Save some photos or videos to your device|
+|tatsi-picker.view.album.loading.title | Loading...|
+|tatsi-picker.button.camera.title | Camera|
+|tatsi-picker.accessibility.selection-limit-reached | The max number of assets has been selected|
+|tatsi-picker.accessibility.images-count | %d Images|
+|tatsi-picker.accessibility.activate-to-hide-album-list | Activate to hide album list|
+|tatsi-picker.accessibility.activate-to-show-album-list | Activate to show album list|
+|tasti.button.change-album | Tap here to change | 
+
 ## Misc
 
 ### Origin of name
