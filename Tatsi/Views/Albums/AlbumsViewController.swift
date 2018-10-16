@@ -33,6 +33,8 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     fileprivate var userAlbums: [PHAssetCollection] = []
     
+    fileprivate var sharedAlbums: [PHAssetCollection] = []
+    
     lazy fileprivate var smartAlbumSortingOrder: [PHAssetCollectionSubtype] = {
         var smartAlbumSortingOrder = [
             PHAssetCollectionSubtype.smartAlbumUserLibrary,
@@ -114,38 +116,60 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     // MARK: - Fetching
     
     fileprivate func startLoadingAlbums() {
-        var smartAlbums = [PHAssetCollection]()
-        
-        let smartAlbumResults = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.albumRegular, options: nil)
-        smartAlbumResults.enumerateObjects({ (collection, _, _) in
+        self.smartAlbums = self.fetchSmartAlbums()
+        self.userAlbums = self.fetchUserAlbums()
+        self.sharedAlbums = self.fetchSharedAlbums()
+    }
+    
+    fileprivate func fetchSmartAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.albumRegular, options: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
             guard self.config?.isCollectionAllowed(collection) == true else {
                 return
             }
-            smartAlbums.append(collection)
+            collections.append(collection)
         })
-        smartAlbums.sort { (collection1, collection2) -> Bool in
+        collections.sort { (collection1, collection2) -> Bool in
             guard let index1 = self.smartAlbumSortingOrder.index(of: collection1.assetCollectionSubtype), let index2 = self.smartAlbumSortingOrder.index(of: collection2.assetCollectionSubtype) else {
                 return true
             }
             return index1 < index2
         }
-        self.smartAlbums = smartAlbums
-
-        var albums = [PHAssetCollection]()
-        let albumResults = PHCollectionList.fetchTopLevelUserCollections(with: nil)
-        albumResults.enumerateObjects({ (collection, _, _) in
+        return collections
+    }
+    
+    fileprivate func fetchUserAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
             guard let assetCollection = collection as? PHAssetCollection, self.config?.isCollectionAllowed(collection) == true else {
                 return
             }
-            albums.append(assetCollection)
+            collections.append(assetCollection)
         })
-        albums.sort { (collection1, collection2) -> Bool in
-            guard let startDate1 = collection1.localizedTitle, let startDate2 = collection2.localizedTitle else {
+        collections.sort { (collection1, collection2) -> Bool in
+            guard let title1 = collection1.localizedTitle, let title2 = collection2.localizedTitle else {
                 return false
             }
-            return startDate1.compare(startDate2) == .orderedDescending
+            return title1.compare(title2) == .orderedDescending
         }
-        self.userAlbums = albums
+        return collections
+    }
+    
+    fileprivate func fetchSharedAlbums() -> [PHAssetCollection] {
+        let collectionResults = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
+        var collections = [PHAssetCollection]()
+        collectionResults.enumerateObjects({ (collection, _, _) in
+            collections.append(collection)
+        })
+        collections.sort { (collection1, collection2) -> Bool in
+            guard let title1 = collection1.localizedTitle, let title2 = collection2.localizedTitle else {
+                return false
+            }
+            return title1.compare(title2) == .orderedDescending
+        }
+        return collections
     }
     
     // MARK: - Actions
@@ -162,6 +186,8 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
             return self.smartAlbums[indexPath.row]
         case 1:
             return self.userAlbums[indexPath.row]
+        case 2:
+            return self.sharedAlbums[indexPath.row]
         default:
             return nil
         }
@@ -174,7 +200,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
 extension AlbumsViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -183,6 +209,8 @@ extension AlbumsViewController {
             return self.smartAlbums.count
         case 1:
             return self.userAlbums.count
+        case 2:
+            return self.sharedAlbums.count
         default:
             return 0
         }
