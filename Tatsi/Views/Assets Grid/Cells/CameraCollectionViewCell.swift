@@ -36,7 +36,7 @@ final internal class CameraCollectionViewCell: UICollectionViewCell {
         
         self.accessibilityIdentifier = "tatsi.cell.camera"
         self.accessibilityLabel = LocalizableStrings.cameraButtonTitle
-        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.accessibilityTraits = UIAccessibilityTraits.button
         self.isAccessibilityElement = true
         
         self.setupConstraints()
