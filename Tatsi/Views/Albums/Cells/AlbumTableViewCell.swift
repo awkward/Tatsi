@@ -30,7 +30,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
     
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.subheadline)
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,7 +38,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
     
     lazy private  var countLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.subheadline)
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -60,7 +60,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
     
     private var albumChanged = false
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.setupView()
@@ -126,7 +126,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
         })
 
         
-        self.albumImageView.imageView.contentMode = UIViewContentMode.center
+        self.albumImageView.imageView.contentMode = UIView.ContentMode.center
         self.albumImageView.image = nil
         
         guard let album = self.album, !album.isRecentlyDeletedCollection && album.assetCollectionSubtype != .smartAlbumAllHidden else {
@@ -134,7 +134,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
         }
         album.loadPreviewImage(self.albumImageView.preferredImageSize, fetchOptions: fetchOptions, completionHandler: { [weak self] (image, _) in
             if let image = image {
-                self?.albumImageView.imageView.contentMode = UIViewContentMode.scaleAspectFill
+                self?.albumImageView.imageView.contentMode = UIView.ContentMode.scaleAspectFill
                 self?.albumImageView.image = image
             }
             

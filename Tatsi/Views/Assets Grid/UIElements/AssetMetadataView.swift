@@ -100,7 +100,7 @@ final internal class AssetMetadataView: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 25)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 25)
     }
     
     private func string(from interval: TimeInterval) -> String? {

@@ -73,7 +73,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
         cancelButtonItem.target = self
         cancelButtonItem.action = #selector(cancel(_:))
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"

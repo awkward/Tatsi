@@ -1,6 +1,6 @@
 
 language: swift
-osx_image: xcode9.4
+osx_image: xcode10.1
 xcode_sdk: iphonesimulator11.4
 script:
   - xcodebuild clean build -project Tatsi.xcodeproj -scheme Tatsi -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.4'

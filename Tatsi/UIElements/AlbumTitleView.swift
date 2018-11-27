@@ -76,7 +76,7 @@ final class AlbumTitleView: UIControl {
         self.addSubview(self.directionLabel)
         
         self.isAccessibilityElement = true
-        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.accessibilityTraits = UIAccessibilityTraits.button
         self.accessibilityHint = LocalizableStrings.accessibilityActivateToShowAlbumList
     }
     

@@ -106,7 +106,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     }
     
     @objc private func openSettings(_ sender: UIButton) {
-        guard let url = URL(string: UIApplicationOpenSettingsURLString) else {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else {
             return
         }
         if #available(iOS 10, *) {
