@@ -84,9 +84,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
                         self.scrollToEnd()
                     }
                     for selectedAsset in self.selectedAssets {
-                        if let index = self.assets?.index(of: selectedAsset) {
-                            collectionView.selectItem(at: IndexPath(item: index + (self.showCameraButton ? 1 : 0), section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition())
-                        }
+                        self.selectAsset(selectedAsset)
                     }
                     self.emptyView = collectionView.numberOfItems(inSection: 0) <= 0  ? AlbumEmptyView() : nil
                 })
@@ -354,6 +352,24 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
         return assets[index]
     }
+    
+    fileprivate func addAsset(_ asset: PHAsset) {
+        if self.config?.invertUserLibraryOrder == true {
+            self.assets?.insert(asset, at: 0)
+        } else {
+            self.assets?.append(asset)
+        }
+    }
+    
+    fileprivate func selectAsset(_ asset: PHAsset) {
+        if !self.selectedAssets.contains(asset) {
+            self.selectedAssets.append(asset)
+        }
+        if let index = self.assets?.index(of: asset) {
+            let additionalIndex = self.config?.invertUserLibraryOrder == true && self.showCameraButton ? 1 : 0
+            self.collectionView.selectItem(at: IndexPath(item: index + additionalIndex, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition())
+        }
+    }
 
     fileprivate func scrollToEnd() {
         guard let collectionView = self.collectionView else {
@@ -478,28 +494,56 @@ extension AssetsGridViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = (info[UIImagePickerController.InfoKey.editedImage] as? UIImage) ?? (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else {
+            return
+        }
+        self.createAsset(from: image) { [weak self] (asset, error) in
+            if let asset = asset {
+                self?.addAsset(asset)
+                self?.selectAsset(asset)
+            } else if let error = error {
+                print("Error saving photo \(error)")
+            } else {
+                self?.startFetchingAssets()
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         //Save the image
+        self.createAsset(from: image) { [weak self] (asset, error) in
+            if let asset = asset {
+                
+                self?.addAsset(asset)
+                self?.selectAsset(asset)
+            } else if let error = error {
+                print("Error saving photo \(error)")
+            } else {
+                self?.startFetchingAssets()
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func createAsset(from image: UIImage, completionHandler: @escaping ((_ asset: PHAsset?, _ error: Error?) -> Void)) {
         var localIdentifier: String?
         PHPhotoLibrary.shared().performChanges({
             let request = PHAssetChangeRequest.creationRequestForAsset(from: image)
             localIdentifier = request.placeholderForCreatedAsset?.localIdentifier
-            }) { (_, error) in
-                DispatchQueue.main.async(execute: { [weak self] in
-                    if let error = error {
-                        NSLog("Error performing changes \(error)")
-                    } else {
-                        if let localIdentifier = localIdentifier, let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject {
-                            self?.selectedAssets.append(asset)
-                            self?.assets?.insert(asset, at: 0)
-                            
-                        } else {
-                            self?.startFetchingAssets()
-                        }
-                    }
-                })
-                
+        }) { (_, error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    completionHandler(nil, error)
+                } else if let localIdentifier = localIdentifier, let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject {
+                    completionHandler(asset, nil)
+                } else {
+                    completionHandler(nil, nil)
+                }
+            }
+            
         }
-        picker.dismiss(animated: true, completion: nil)
     }
+    
 }
