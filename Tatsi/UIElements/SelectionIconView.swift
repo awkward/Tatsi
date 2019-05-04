@@ -9,6 +9,7 @@
 import UIKit
 
 final internal class SelectionIconView: UIView {
+    var selectionButtonColor: UIColor? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,6 +21,12 @@ final internal class SelectionIconView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    convenience init(selectionButtonColor: UIColor?) {
+        self.init(frame: CGRect.zero)
+        
+        self.selectionButtonColor = selectionButtonColor
     }
     
     override func draw(_ rect: CGRect) {
@@ -50,7 +57,12 @@ final internal class SelectionIconView: UIView {
         
         //// Fill Drawing
         let fillPath = UIBezierPath(ovalIn: CGRect(x: 1, y: 1, width: 22, height: 22))
-        self.tintColor.setFill()
+        if let color = self.selectionButtonColor {
+            color.setFill()
+        }
+        else {
+            self.tintColor.setFill()
+        }
         fillPath.fill()
         
         //// Checkmark Drawing

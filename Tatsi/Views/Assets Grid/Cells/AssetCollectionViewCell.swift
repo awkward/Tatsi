@@ -11,6 +11,8 @@ import Photos
 
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
+    var selectionButtonColor: UIColor? = nil
+    
     static var reuseIdentifier: String {
         return "asset-cell"
     }
@@ -60,7 +62,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         view.isHidden = true
         view.backgroundColor = UIColor.white.withAlphaComponent(0.4)
         
-        let iconView = SelectionIconView()
+        let iconView = SelectionIconView(selectionButtonColor: self.selectionButtonColor)
         iconView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(iconView)
         view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
@@ -72,14 +74,16 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.setupView()
+//        self.setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    func setupView(selectionButtonColor: UIColor?) {
+        self.selectionButtonColor = selectionButtonColor
+        
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.metadataView)
         self.contentView.addSubview(self.selectedOverlay)

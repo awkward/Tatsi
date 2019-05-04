@@ -97,6 +97,8 @@ public struct TatsiConfig {
     /// Table selection color (instead of gray/blue)
     public var tableViewSelectionColor: UIColor? = nil
     
+    /// Grid selection icon color, when people overwrite UIButton.appearance, this can mess up the selection icon color
+    public var selectionIconColor: UIColor? = nil
     
     // MARK: - Internal features
     

@@ -61,6 +61,8 @@ final class ViewController: UIViewController {
         
         config.tableViewSelectionColor = UIColor.darkGray
         
+        config.selectionIconColor = UIColor.purple
+        
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self
         self.present(pickerViewController, animated: true, completion: nil)

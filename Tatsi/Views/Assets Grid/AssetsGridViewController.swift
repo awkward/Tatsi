@@ -407,6 +407,7 @@ extension AssetsGridViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCollectionViewCell.reuseIdentifier, for: indexPath) as? AssetCollectionViewCell else {
             fatalError("AssetCollectionViewCell should be registered")
         }
+        cell.setupView(selectionButtonColor: self.config?.selectionIconColor)
         cell.imageSize = self.thumbnailImageSize
         cell.imageManager = self.thumbnailCachingManager
         cell.asset = asset
