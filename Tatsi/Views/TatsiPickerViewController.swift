@@ -55,8 +55,7 @@ final public class TatsiPickerViewController: UINavigationController {
         case .denied, .notDetermined, .restricted:
             // Not authorized, show the view to give access
             self.viewControllers = [AuthorizationViewController()]
-        @unknown default:
-            <#fatalError()#>
+        @unknown default: break
         }
     }
     

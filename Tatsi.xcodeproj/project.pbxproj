@@ -441,10 +441,9 @@
 			};
 			buildConfigurationList = 0C5B613E1F0D2293005A25CE /* Build configuration list for PBXProject "Tatsi" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
