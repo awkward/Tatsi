@@ -16,6 +16,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.textColor = self.config?.viewTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -25,7 +26,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = .gray
+        label.textColor = self.config?.viewSubTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -51,7 +52,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = self.config?.viewBackgroundColor
 
         self.setupView()
     }
