@@ -241,6 +241,13 @@ extension AlbumsViewController {
         cell.reloadContents(with: self.config?.assetFetchOptions())
         cell.accessoryType = (self.config?.singleViewMode ?? false) ? .none : .disclosureIndicator
         cell.backgroundColor = self.config?.viewBackgroundColor
+        
+        // Custom color for selection
+        if let color = self.config?.tableViewSelectionColor {
+            let selectionColorView = UIView()
+            selectionColorView.backgroundColor = color
+            cell.selectedBackgroundView = selectionColorView
+        }
         return cell
     }
     

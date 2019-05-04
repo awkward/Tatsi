@@ -94,6 +94,9 @@ public struct TatsiConfig {
     /// General subtext color
     public var viewSubTitleColor: UIColor = UIColor.gray
     
+    /// Table selection color (instead of gray/blue)
+    public var tableViewSelectionColor: UIColor? = nil
+    
     
     // MARK: - Internal features
     
