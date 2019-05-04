@@ -87,6 +87,14 @@ public struct TatsiConfig {
     /// NavigationBar - SubTitle tint color
     public var navigationBarSubTitleTintColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
     
+    /// General view backgroundcolor
+    public var viewBackgroundColor = UIColor.white
+    /// General text color
+    public var viewTitleColor: UIColor? = nil
+    /// General subtext color
+    public var viewSubTitleColor: UIColor = UIColor.gray
+    
+    
     // MARK: - Internal features
     
     /// All the PHAssetCollectionSubtypes that should not be shown to the user. Based on the current config

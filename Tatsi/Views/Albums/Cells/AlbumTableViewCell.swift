@@ -11,6 +11,9 @@ import Photos
 
 final internal class AlbumTableViewCell: UITableViewCell {
     
+    var titleColor: UIColor? = nil
+    var subTitleColor: UIColor? = nil
+
     fileprivate static let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.usesGroupingSeparator = true
@@ -31,6 +34,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+        label.textColor = self.titleColor
         label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -39,7 +43,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
     lazy private  var countLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
-        label.textColor = UIColor.gray
+        label.textColor = self.subTitleColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -63,14 +67,17 @@ final internal class AlbumTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.setupView()
+//        self.setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    func setupView(titleColor: UIColor?, subTitleColor: UIColor?) {
+        self.titleColor = titleColor
+        self.subTitleColor = subTitleColor ?? UIColor.gray
+        
         self.contentView.addSubview(self.albumImageView)
         self.contentView.addSubview(self.labelsStackView)
         

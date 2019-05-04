@@ -52,9 +52,12 @@ final class ViewController: UIViewController {
         config.navigationBarIsTranslucent = false
         config.navigationBarBarColor = .black
         config.navigationBarTintColor = .white
-        config.navigationBarTitleTintColor = .yellow
-        config.navigationBarSubTitleTintColor = .orange
+        config.navigationBarTitleTintColor = .white
+        config.navigationBarSubTitleTintColor = .lightGray
         
+        config.viewBackgroundColor = .black
+        config.viewTitleColor = .white
+        config.viewSubTitleColor = UIColor.lightGray
         
         
         let pickerViewController = TatsiPickerViewController(config: config)

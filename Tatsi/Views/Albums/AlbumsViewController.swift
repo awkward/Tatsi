@@ -101,7 +101,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
         self.tableView.rowHeight = 90
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         self.tableView.separatorStyle = .none
-        
+        self.tableView.backgroundColor = self.config?.viewBackgroundColor
         self.tableView.accessibilityIdentifier = "tatsi.tableView.albums"
         
         self.startLoadingAlbums()
@@ -235,9 +235,12 @@ extension AlbumsViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseIdentifier, for: indexPath) as? AlbumTableViewCell else {
             fatalError("AlbumTableViewCell probably not registered")
         }
+        cell.setupView(titleColor: self.config?.viewTitleColor, subTitleColor: self.config?.viewSubTitleColor ?? UIColor.gray)
+        
         cell.album = self.album(for: indexPath)
         cell.reloadContents(with: self.config?.assetFetchOptions())
         cell.accessoryType = (self.config?.singleViewMode ?? false) ? .none : .disclosureIndicator
+        cell.backgroundColor = self.config?.viewBackgroundColor
         return cell
     }
     
