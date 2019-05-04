@@ -11,6 +11,8 @@ import UIKit
 /// The arrow that is displayed in AlbumTitleView next to the title.
 internal class ChangeAlbumArrowView: UIView {
     
+    var arrowColor = UIColor.black
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -21,6 +23,11 @@ internal class ChangeAlbumArrowView: UIView {
         super.init(coder: aDecoder)
     }
     
+    convenience init(arrowColor: UIColor) {
+        self.init(frame: CGRect.zero)
+        self.arrowColor = arrowColor
+    }
+    
     override func draw(_ rect: CGRect) {
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: 0, y: 0))
@@ -29,7 +36,7 @@ internal class ChangeAlbumArrowView: UIView {
         bezierPath.addLine(to: CGPoint(x: 0, y: 0))
         bezierPath.close()
         bezierPath.usesEvenOddFillRule = true
-        UIColor.black.setFill()
+        self.arrowColor.setFill()
         bezierPath.fill()
     }
     

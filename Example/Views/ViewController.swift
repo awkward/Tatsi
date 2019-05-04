@@ -42,6 +42,26 @@ final class ViewController: UIViewController {
         self.present(pickerViewController, animated: true, completion: nil)
     }
 
+    @IBAction func showSingleViewTatsiPickerDark(_ sender: Any) {
+        var config = TatsiConfig.default
+        config.singleViewMode = true
+        config.showCameraOption = true
+        config.supportedMediaTypes = [.video, .image]
+        config.firstView = .userLibrary
+
+        config.navigationBarIsTranslucent = false
+        config.navigationBarBarColor = .black
+        config.navigationBarTintColor = .white
+        config.navigationBarTitleTintColor = .yellow
+        config.navigationBarSubTitleTintColor = .orange
+        
+        
+        
+        let pickerViewController = TatsiPickerViewController(config: config)
+        pickerViewController.pickerDelegate = self
+        self.present(pickerViewController, animated: true, completion: nil)
+
+    }
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

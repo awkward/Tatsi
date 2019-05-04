@@ -98,6 +98,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         buttonitem.target = self
         buttonitem.action = #selector(AssetsGridViewController.done(_:))
         buttonitem.accessibilityIdentifier = "tatsi.button.done"
+        buttonitem.tintColor = config?.navigationBarTintColor
+
         return buttonitem
     }()
     
@@ -141,6 +143,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         cancelButtonItem.target = self
         cancelButtonItem.action = #selector(cancel(_:))
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
+        cancelButtonItem.tintColor = config?.navigationBarTintColor
         
         self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
     }
@@ -251,7 +254,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         self.reloadDoneButtonState()
         
         if self.config?.singleViewMode ?? false {
-            let titleView = AlbumTitleView()
+            let titleView = AlbumTitleView(titleColor: self.config?.navigationBarTitleTintColor, subTitleColor: self.config?.navigationBarSubTitleTintColor)
             titleView.title = self.album.localizedTitle
             titleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
             titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)

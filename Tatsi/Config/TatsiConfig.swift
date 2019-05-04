@@ -74,6 +74,19 @@ public struct TatsiConfig {
     /// If the delegate should finish immediately when maxNumberOfSelections is set to 1 and the user selects a photo
     public var finishImmediatelyWithMaximumOfOne = true
     
+    // MARK: - Colors
+    
+    /// NavigationBar - isTranslucent
+    public var navigationBarIsTranslucent = true
+    /// NavigationBar - bar color
+    public var navigationBarBarColor: UIColor? = nil
+    /// NavigationBar - tint color
+    public var navigationBarTintColor: UIColor? = nil
+    /// NavigationBar - Title tint color
+    public var navigationBarTitleTintColor = UIColor.black
+    /// NavigationBar - SubTitle tint color
+    public var navigationBarSubTitleTintColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+    
     // MARK: - Internal features
     
     /// All the PHAssetCollectionSubtypes that should not be shown to the user. Based on the current config

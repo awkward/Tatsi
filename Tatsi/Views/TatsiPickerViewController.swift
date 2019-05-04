@@ -24,6 +24,14 @@ final public class TatsiPickerViewController: UINavigationController {
         super.init(nibName: nil, bundle: nil)
         
         self.setIntialViewController()
+        
+        // Navigation bar colors
+        self.navigationBar.isTranslucent = config.navigationBarIsTranslucent
+        self.navigationBar.barTintColor = config.navigationBarBarColor
+        if let tintColor = config.navigationBarTintColor {
+            self.navigationBar.tintColor = tintColor
+            self.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: tintColor]
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {

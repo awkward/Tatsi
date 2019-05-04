@@ -18,6 +18,8 @@ final class AlbumTitleView: UIControl {
             self.titleLabel.text = self.title
         }
     }
+    var titleColor = UIColor.black
+    var subTitleColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
     
     /// If the arrow should flip 180 degrees. Can be used in an animation block.
     var flipArrow: Bool = false {
@@ -33,7 +35,7 @@ final class AlbumTitleView: UIControl {
     
     lazy fileprivate var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = self.titleColor
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         label.isUserInteractionEnabled = false
         label.isAccessibilityElement = false
@@ -42,7 +44,7 @@ final class AlbumTitleView: UIControl {
     }()
     
     lazy fileprivate var arrowIconView: ChangeAlbumArrowView = {
-        let imageView = ChangeAlbumArrowView()
+        let imageView = ChangeAlbumArrowView(arrowColor: self.titleColor)
         imageView.isUserInteractionEnabled = false
         imageView.isAccessibilityElement = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +54,7 @@ final class AlbumTitleView: UIControl {
    lazy fileprivate var directionLabel: UILabel = {
         let label = UILabel()
         label.text = NSLocalizedString("tasti.button.change-album", tableName: nil, bundle: Bundle.main, value: "Tap here to change", comment: "The label that is shown below the album's name to direct the user to tap the title to change the album")
-        label.textColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        label.textColor = self.subTitleColor
         label.font = UIFont.systemFont(ofSize: 10)
         label.isUserInteractionEnabled = false
         label.isAccessibilityElement = false
@@ -62,12 +64,19 @@ final class AlbumTitleView: UIControl {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    convenience init(titleColor: UIColor?, subTitleColor: UIColor?) {
+        self.init(frame: CGRect.zero)
+
+        self.titleColor = titleColor ?? UIColor.black
+        self.subTitleColor = subTitleColor ?? UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        
+        self.setupView()
     }
     
     private func setupView() {
