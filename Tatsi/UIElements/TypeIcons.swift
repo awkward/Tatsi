@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // swiftlint:disable type_body_length function_body_length
 final internal class TypeIcons {
