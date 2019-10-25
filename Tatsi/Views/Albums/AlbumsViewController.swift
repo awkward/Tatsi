@@ -56,13 +56,13 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
             PHAssetCollectionSubtype.smartAlbumScreenshots,
             PHAssetCollectionSubtype.smartAlbumAllHidden
         ]
-        if #available(iOS 10.3, *), let index = smartAlbumSortingOrder.index(of: .smartAlbumPanoramas) {
+        if #available(iOS 10.3, *), let index = smartAlbumSortingOrder.firstIndex(of: .smartAlbumPanoramas) {
             smartAlbumSortingOrder.insert(.smartAlbumLivePhotos, at: index)
         }
-        if #available(iOS 10.2, *), let index = smartAlbumSortingOrder.index(of: .smartAlbumBursts) {
+        if #available(iOS 10.2, *), let index = smartAlbumSortingOrder.firstIndex(of: .smartAlbumBursts) {
             smartAlbumSortingOrder.insert(.smartAlbumDepthEffect, at: index)
         }
-        if #available(iOS 11, *), let index = smartAlbumSortingOrder.index(of: .smartAlbumAllHidden) {
+        if #available(iOS 11, *), let index = smartAlbumSortingOrder.firstIndex(of: .smartAlbumAllHidden) {
             smartAlbumSortingOrder.insert(.smartAlbumAnimated, at: index)
         }
         return smartAlbumSortingOrder
@@ -153,7 +153,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
             collections.append(collection)
         })
         collections.sort { (collection1, collection2) -> Bool in
-            guard let index1 = self.smartAlbumSortingOrder.index(of: collection1.assetCollectionSubtype), let index2 = self.smartAlbumSortingOrder.index(of: collection2.assetCollectionSubtype) else {
+            guard let index1 = self.smartAlbumSortingOrder.firstIndex(of: collection1.assetCollectionSubtype), let index2 = self.smartAlbumSortingOrder.firstIndex(of: collection2.assetCollectionSubtype) else {
                 return true
             }
             return index1 < index2

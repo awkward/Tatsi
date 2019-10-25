@@ -370,7 +370,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         if !self.selectedAssets.contains(asset) {
             self.selectedAssets.append(asset)
         }
-        if let index = self.assets?.index(of: asset) {
+        if let index = self.assets?.firstIndex(of: asset) {
             let additionalIndex = self.config?.invertUserLibraryOrder == true && self.showCameraButton ? 1 : 0
             self.collectionView.selectItem(at: IndexPath(item: index + additionalIndex, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition())
         }
@@ -452,7 +452,7 @@ extension AssetsGridViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let asset = self.asset(for: indexPath), let index = self.selectedAssets.index(of: asset) else {
+        guard let asset = self.asset(for: indexPath), let index = self.selectedAssets.firstIndex(of: asset) else {
             return
         }
         self.selectedAssets.remove(at: index)
