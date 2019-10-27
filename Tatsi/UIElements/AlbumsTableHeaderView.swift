@@ -25,7 +25,7 @@ final internal class AlbumsTableHeaderView: UITableViewHeaderFooterView {
     lazy private var label: UILabel = {
         let label = UILabel()
         label.font = AlbumsTableHeaderView.font
-        label.textColor = .gray
+        label.textColor = TatsiConfig.default.colors.secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +49,7 @@ final internal class AlbumsTableHeaderView: UITableViewHeaderFooterView {
     
     private func setupView() {
         self.contentView.addSubview(self.label)
-        self.contentView.backgroundColor = .white
+        self.contentView.backgroundColor = TatsiConfig.default.colors.background
         
         self.setupConstraints()
     }

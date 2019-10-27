@@ -62,6 +62,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         
         let iconView = SelectionIconView()
         iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.tintColor = TatsiConfig.default.colors.tint
         view.addSubview(iconView)
         view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
         view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 3).isActive = true

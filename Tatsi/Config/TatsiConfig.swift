@@ -31,7 +31,10 @@ public struct TatsiConfig {
         /// A view that shows the photos of a specific album.
         case album(PHAssetCollection)
     }
-    
+
+    /// The colors to apply to the interface elements.
+    public var colors: TatsiColors = TatsiDefaultColors()
+
     /// All media types that the picker displays. Defaults to images and videos.
     public var supportedMediaTypes: Set<PHAssetMediaType> = [PHAssetMediaType.image, PHAssetMediaType.video]
     
