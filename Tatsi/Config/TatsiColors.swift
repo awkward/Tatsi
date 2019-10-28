@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Defines colors which will be applied on the Tatsi elements.
+/// Defines colors that will be applied to the Tatsi elements.
 public protocol TatsiColors {
     var background: UIColor { get }
     var secondaryBackground: UIColor { get }
