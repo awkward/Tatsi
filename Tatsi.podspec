@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Tatsi"
-  s.version      = "1.1.6"
+  s.version      = "1.1.7"
   s.summary      = "A drop-in replacement for UIImagePickerController with the ability to select multiple images and/or videos"
 
   # This description is used to generate tags and improve search results.
