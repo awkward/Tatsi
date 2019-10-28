@@ -37,6 +37,8 @@ Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created 
 - Accessibility (voice-over and switch control) is supported
 - Easily Localizable
 - Support for smart albums, user created albums and iCloud shared albums
+- Support for dark mode by default
+- Customization using the `TatsiColors` protocol
 
 ## Installation
 
