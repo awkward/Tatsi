@@ -33,15 +33,7 @@ public struct TatsiDefaultColors: TatsiColors {
         }
     }()
 
-    public var secondaryBackground: UIColor = {
-        if #available(iOS 13.0, *) {
-            return .secondarySystemBackground
-        } else {
-            return .white
-        }
-    }()
-
-    public var tint: UIColor = {
+    public var link: UIColor = {
         if #available(iOS 13.0, *) {
             return .link
         } else {
