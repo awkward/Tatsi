@@ -10,10 +10,16 @@ import Foundation
 
 /// Defines colors that will be applied to the Tatsi elements.
 public protocol TatsiColors {
+    /// Used as the background color for all the pages.
     var background: UIColor { get }
-    var secondaryBackground: UIColor { get }
-    var tint: UIColor { get }
+
+    /// This is the primary action color used for tinting buttons like the Cancel and Done buttons.
+    var link: UIColor { get }
+
+    /// The main color for text labels.
     var label: UIColor { get }
+
+    /// The color for secondary labels like descriptions.
     var secondaryLabel: UIColor { get }
 }
 
