@@ -29,7 +29,7 @@ internal class ChangeAlbumArrowView: UIView {
         bezierPath.addLine(to: CGPoint(x: 0, y: 0))
         bezierPath.close()
         bezierPath.usesEvenOddFillRule = true
-        UIColor.black.setFill()
+        TatsiConfig.default.colors.label.setFill()
         bezierPath.fill()
     }
     

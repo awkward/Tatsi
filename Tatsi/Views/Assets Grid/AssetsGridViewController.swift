@@ -98,6 +98,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         buttonitem.target = self
         buttonitem.action = #selector(AssetsGridViewController.done(_:))
         buttonitem.accessibilityIdentifier = "tatsi.button.done"
+        buttonitem.tintColor = TatsiConfig.default.colors.link
         return buttonitem
     }()
     
@@ -120,7 +121,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         self.collectionView?.register(AssetCollectionViewCell.self, forCellWithReuseIdentifier: AssetCollectionViewCell.reuseIdentifier)
         self.collectionView?.register(CameraCollectionViewCell.self, forCellWithReuseIdentifier: CameraCollectionViewCell.reuseIdentifier)
         
-        self.collectionView?.backgroundColor = .white
+        self.collectionView?.backgroundColor = TatsiConfig.default.colors.background
         
         self.collectionView?.accessibilityIdentifier = "tatsi.collectionView.photosGrid"
         
@@ -145,6 +146,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
         cancelButtonItem.target = self
         cancelButtonItem.action = #selector(cancel(_:))
+        cancelButtonItem.tintColor = TatsiConfig.default.colors.link
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
         
         self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil

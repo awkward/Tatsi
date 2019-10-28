@@ -40,7 +40,7 @@ final internal class AlbumEmptyView: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .title2).withSize(26)
-        label.textColor = UIColor.lightGray
+        label.textColor = TatsiConfig.default.colors.secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -50,7 +50,7 @@ final internal class AlbumEmptyView: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = UIColor.lightGray
+        label.textColor = TatsiConfig.default.colors.secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
