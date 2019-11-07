@@ -72,20 +72,6 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
-        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
-        cancelButtonItem.target = self
-        cancelButtonItem.action = #selector(cancel(_:))
-        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
-        cancelButtonItem.tintColor = TatsiConfig.default.colors.link
-        self.navigationItem.rightBarButtonItem = cancelButtonItem
-        
-        let backButtonItem = UIBarButtonItem(title: LocalizableStrings.albumsViewBackButton, style: .plain, target: nil, action: nil)
-        backButtonItem.accessibilityIdentifier = "tatsi.button.albums"
-        backButtonItem.tintColor = TatsiConfig.default.colors.link
-        self.navigationItem.backBarButtonItem = backButtonItem
-        
-        self.title = LocalizableStrings.albumsViewTitle
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -96,6 +82,17 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancel(_:))
+        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
+        cancelButtonItem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
+        self.navigationItem.rightBarButtonItem = cancelButtonItem
+
+        self.navigationItem.backBarButtonItem?.accessibilityIdentifier = "tatsi.button.albums"
+
+        self.title = LocalizableStrings.albumsViewTitle
         
         self.tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
         self.tableView.register(AlbumsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlbumsTableHeaderView.reuseIdentifier)

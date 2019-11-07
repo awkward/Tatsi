@@ -62,6 +62,15 @@ final internal class AlbumEmptyView: UIView {
         stackView.spacing = 14
         return stackView
     }()
+
+    public var colors: TatsiColors? {
+        didSet {
+            guard let colors = colors else { return }
+
+            self.titleLabel.textColor = colors.label
+            self.messageLabel.textColor = colors.label
+        }
+    }
     
     init(state: EmptyState = .noAssets) {
         self.state = state

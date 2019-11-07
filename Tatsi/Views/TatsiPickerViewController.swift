@@ -24,6 +24,7 @@ final public class TatsiPickerViewController: UINavigationController {
         super.init(nibName: nil, bundle: nil)
 
         navigationBar.barTintColor = config.colors.background
+        navigationBar.tintColor = config.colors.link
 
         self.setIntialViewController()
     }

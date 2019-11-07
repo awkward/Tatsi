@@ -17,6 +17,13 @@ final class ViewController: UIViewController {
         imagePickerController.delegate = self
         self.present(imagePickerController, animated: true, completion: nil)
     }
+
+    struct TestColors: TatsiColors {
+        var background: UIColor = .darkGray
+        var link: UIColor = .white
+        var label: UIColor = .yellow
+        var secondaryLabel: UIColor = .orange
+    }
     
     @IBAction private func showTatsiPicker(_ sender: Any) {
         var config = TatsiConfig.default
@@ -36,7 +43,21 @@ final class ViewController: UIViewController {
         config.showCameraOption = true
         config.supportedMediaTypes = [.video, .image]
         config.firstView = .userLibrary
-        
+
+        let pickerViewController = TatsiPickerViewController(config: config)
+        pickerViewController.pickerDelegate = self
+        self.present(pickerViewController, animated: true, completion: nil)
+    }
+
+    @IBAction private func showTatsiPickerWithCustomColors(_ sender: Any) {
+        var config = TatsiConfig.default
+        config.singleViewMode = true
+        config.showCameraOption = true
+        config.supportedMediaTypes = [.video, .image]
+        config.firstView = .userLibrary
+        config.maxNumberOfSelections = 2
+        config.colors = TestColors()
+
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self
         self.present(pickerViewController, animated: true, completion: nil)
