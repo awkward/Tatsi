@@ -51,6 +51,10 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         
         return stackView
     }()
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config?.preferredStatusBarStyle ?? .default
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

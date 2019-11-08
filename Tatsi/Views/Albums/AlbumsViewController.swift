@@ -36,6 +36,10 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     /// Set the delegate in order to recieve a callback when the user selects an album.
     weak var delegate: AlbumsViewControllerDelegate?
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config?.preferredStatusBarStyle ?? .default
+    }
     
     // MARK: - Private Properties
     

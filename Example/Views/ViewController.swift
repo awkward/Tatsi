@@ -57,9 +57,11 @@ final class ViewController: UIViewController {
         config.firstView = .userLibrary
         config.maxNumberOfSelections = 2
         config.colors = TestColors()
+        config.preferredStatusBarStyle = .lightContent
 
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self
+        pickerViewController.modalPresentationStyle = .fullScreen
         self.present(pickerViewController, animated: true, completion: nil)
     }
 

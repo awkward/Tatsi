@@ -16,6 +16,10 @@ final public class TatsiPickerViewController: UINavigationController {
     public let config: TatsiConfig
     
     public weak var pickerDelegate: TatsiPickerViewControllerDelegate?
+
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config.preferredStatusBarStyle
+    }
     
     // MARK: - Initializers
     

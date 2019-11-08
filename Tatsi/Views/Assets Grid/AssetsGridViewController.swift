@@ -10,7 +10,13 @@ import UIKit
 import Photos
 
 final internal class AssetsGridViewController: UICollectionViewController, PickerViewController {
-    
+
+    // MARK: - Public Properties
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config?.preferredStatusBarStyle ?? .default
+    }
+
     // MARK: - Internal Properties
     
     internal var album: PHAssetCollection {
