@@ -68,7 +68,7 @@ final internal class AlbumEmptyView: UIView {
             guard let colors = colors else { return }
 
             self.titleLabel.textColor = colors.label
-            self.messageLabel.textColor = colors.label
+            self.messageLabel.textColor = colors.secondaryLabel
         }
     }
     

@@ -16,6 +16,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.textColor = self.config?.colors.label ?? TatsiConfig.default.colors.label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,6 +37,9 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         button.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityIdentifier = "tatsi.button.openSettings"
+
+        let color = self.config?.colors.link ?? TatsiConfig.default.colors.link
+        button.setTitleColor(color, for: .normal)
         return button
     }()
     

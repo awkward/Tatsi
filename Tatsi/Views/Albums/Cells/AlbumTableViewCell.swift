@@ -58,6 +58,14 @@ final internal class AlbumTableViewCell: UITableViewCell {
             self.albumChanged = self.album != oldValue
         }
     }
+
+    var colors: TatsiColors? {
+        didSet {
+            self.backgroundColor = self.colors?.background ?? TatsiConfig.default.colors.background
+            self.titleLabel.textColor = self.colors?.label ?? TatsiConfig.default.colors.label
+            self.countLabel.textColor = self.colors?.secondaryLabel ?? TatsiConfig.default.colors.secondaryLabel
+        }
+    }
     
     private var albumChanged = false
     
