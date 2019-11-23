@@ -18,11 +18,12 @@ final class ViewController: UIViewController {
         self.present(imagePickerController, animated: true, completion: nil)
     }
 
-    struct TestColors: TatsiColors {
-        var background: UIColor = .darkGray
-        var link: UIColor = .white
-        var label: UIColor = .yellow
-        var secondaryLabel: UIColor = .orange
+    // Colors picked from iOS 13 Dark Mode
+    struct DarkModeColors: TatsiColors {
+        var background: UIColor = UIColor(red: 28/255, green: 28/255, blue: 30/255, alpha: 255/255)
+        var link: UIColor = UIColor(red: 10/255, green: 132/255, blue: 255/255, alpha: 255/255)
+        var label: UIColor = UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 255/255)
+        var secondaryLabel: UIColor = UIColor(red: 152/255, green: 151/255, blue: 159/255, alpha: 255/255)
     }
     
     @IBAction private func showTatsiPicker(_ sender: Any) {
@@ -56,7 +57,7 @@ final class ViewController: UIViewController {
         config.supportedMediaTypes = [.video, .image]
         config.firstView = .userLibrary
         config.maxNumberOfSelections = 2
-        config.colors = TestColors()
+        config.colors = DarkModeColors()
         config.preferredStatusBarStyle = .lightContent
 
         let pickerViewController = TatsiPickerViewController(config: config)
