@@ -6,7 +6,7 @@
 //  Copyright © 2019 awkward. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 /// Defines colors that will be applied to the Tatsi elements.
 public protocol TatsiColors {
