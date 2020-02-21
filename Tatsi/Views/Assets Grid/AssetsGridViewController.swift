@@ -10,7 +10,13 @@ import UIKit
 import Photos
 
 final internal class AssetsGridViewController: UICollectionViewController, PickerViewController {
-    
+
+    // MARK: - Public Properties
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config?.preferredStatusBarStyle ?? .default
+    }
+
     // MARK: - Internal Properties
     
     internal var album: PHAssetCollection {
@@ -50,6 +56,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     fileprivate var emptyView: AlbumEmptyView? {
         didSet {
+            self.emptyView?.colors = self.config?.colors
             self.collectionView?.backgroundView = self.emptyView
         }
     }
@@ -98,7 +105,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         buttonitem.target = self
         buttonitem.action = #selector(AssetsGridViewController.done(_:))
         buttonitem.accessibilityIdentifier = "tatsi.button.done"
-        buttonitem.tintColor = TatsiConfig.default.colors.link
+        buttonitem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
         return buttonitem
     }()
     
@@ -121,7 +128,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         self.collectionView?.register(AssetCollectionViewCell.self, forCellWithReuseIdentifier: AssetCollectionViewCell.reuseIdentifier)
         self.collectionView?.register(CameraCollectionViewCell.self, forCellWithReuseIdentifier: CameraCollectionViewCell.reuseIdentifier)
         
-        self.collectionView?.backgroundColor = TatsiConfig.default.colors.background
+        self.collectionView?.backgroundColor = self.config?.colors.background ?? TatsiConfig.default.colors.background
         
         self.collectionView?.accessibilityIdentifier = "tatsi.collectionView.photosGrid"
         
@@ -146,7 +153,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
         cancelButtonItem.target = self
         cancelButtonItem.action = #selector(cancel(_:))
-        cancelButtonItem.tintColor = TatsiConfig.default.colors.link
+        cancelButtonItem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
         
         self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
@@ -253,12 +260,16 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     fileprivate func configureForNewAlbum() {
         self.title = self.album.localizedTitle
+        if let color = self.config?.colors.label {
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: color]
+        }
         self.startFetchingAssets()
         
         self.reloadDoneButtonState()
         
         if self.config?.singleViewMode ?? false {
             let titleView = AlbumTitleView()
+            titleView.colors = self.config?.colors
             titleView.title = self.album.localizedTitle
             titleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
             titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)

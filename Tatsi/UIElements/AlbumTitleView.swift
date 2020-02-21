@@ -59,6 +59,15 @@ final class AlbumTitleView: UIControl {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
+    var colors: TatsiColors? {
+        didSet {
+            guard let colors = colors else { return }
+            
+            self.titleLabel.textColor = colors.label
+            self.directionLabel.textColor = colors.secondaryLabel
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -43,6 +43,13 @@
                                             <action selector="showSingleViewTatsiPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OKE-KL-ZPV"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xK-Iv-jfT">
+                                        <rect key="frame" x="0.0" y="120" width="254" height="30"/>
+                                        <state key="normal" title="Show Tatsi Picker with custom colors"/>
+                                        <connections>
+                                            <action selector="showTatsiPickerWithCustomColors:" destination="BYZ-38-t0r" eventType="touchUpInside" id="69M-C4-9g4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>

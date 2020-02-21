@@ -36,6 +36,10 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     /// Set the delegate in order to recieve a callback when the user selects an album.
     weak var delegate: AlbumsViewControllerDelegate?
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.config?.preferredStatusBarStyle ?? .default
+    }
     
     // MARK: - Private Properties
     
@@ -72,20 +76,6 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
-        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
-        cancelButtonItem.target = self
-        cancelButtonItem.action = #selector(cancel(_:))
-        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
-        cancelButtonItem.tintColor = TatsiConfig.default.colors.link
-        self.navigationItem.rightBarButtonItem = cancelButtonItem
-        
-        let backButtonItem = UIBarButtonItem(title: LocalizableStrings.albumsViewBackButton, style: .plain, target: nil, action: nil)
-        backButtonItem.accessibilityIdentifier = "tatsi.button.albums"
-        backButtonItem.tintColor = TatsiConfig.default.colors.link
-        self.navigationItem.backBarButtonItem = backButtonItem
-        
-        self.title = LocalizableStrings.albumsViewTitle
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -96,12 +86,24 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+        cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancel(_:))
+        cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
+        cancelButtonItem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
+        self.navigationItem.rightBarButtonItem = cancelButtonItem
+
+        self.navigationItem.backBarButtonItem?.accessibilityIdentifier = "tatsi.button.albums"
+
+        self.title = LocalizableStrings.albumsViewTitle
         
         self.tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
         self.tableView.register(AlbumsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlbumsTableHeaderView.reuseIdentifier)
         self.tableView.rowHeight = 90
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         self.tableView.separatorStyle = .none
+        self.tableView.backgroundColor = self.config?.colors.background ?? TatsiConfig.default.colors.background
         
         self.tableView.accessibilityIdentifier = "tatsi.tableView.albums"
         
@@ -239,6 +241,7 @@ extension AlbumsViewController {
         cell.album = self.album(for: indexPath)
         cell.reloadContents(with: self.config?.assetFetchOptions())
         cell.accessoryType = (self.config?.singleViewMode ?? false) ? .none : .disclosureIndicator
+        cell.colors = self.config?.colors
         return cell
     }
     
@@ -268,6 +271,7 @@ extension AlbumsViewController {
             fatalError("AlbumsTableHeaderView probably not registered")
         }
         headerView.title = category.headerTitle
+        headerView.colors = self.config?.colors
         return headerView
     }
     
