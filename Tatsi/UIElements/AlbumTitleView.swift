@@ -51,7 +51,7 @@ final class AlbumTitleView: UIControl {
     
    lazy fileprivate var directionLabel: UILabel = {
         let label = UILabel()
-        label.text = NSLocalizedString("tasti.button.change-album", tableName: nil, bundle: Bundle.main, value: "Tap here to change", comment: "The label that is shown below the album's name to direct the user to tap the title to change the album")
+        label.text = LocalizableStrings.tapToChangeAlbumTitle
         label.textColor = TatsiConfig.default.colors.secondaryLabel
         label.font = UIFont.systemFont(ofSize: 10)
         label.isUserInteractionEnabled = false

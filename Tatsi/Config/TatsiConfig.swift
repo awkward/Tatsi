@@ -80,6 +80,13 @@ public struct TatsiConfig {
 
     /// The statusbar style to be used on the screens
     public var preferredStatusBarStyle: UIStatusBarStyle = .default
+    
+    /// Set a table name to load the localizable strings used in Tatsi from a specified localizable strings file.
+    public var localizableStringsTableName: String? {
+        didSet {
+            LocalizableStrings.tableName = localizableStringsTableName
+        }
+    }
 
     // MARK: - Internal features
     
