@@ -15,6 +15,7 @@ final internal class LocalizableStrings {
         return Bundle.main
     }
     
+    /// The table name to fetch the localized strings from. Defaults to nil, which will not check a specific table.
     static var tableName: String?
     
     /// The title at the top of the albums view
