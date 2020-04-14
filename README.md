@@ -65,6 +65,13 @@ Hi, we're <a href="https://awkward.co/" target="_blank">Awkward</a>. We created 
 4. Add `NSPhotoLibraryUsageDescription` to your Info.plist with a proper description.
 5. (Optional) if you want to use the camera option. You will also need to add `NSCameraUsageDescription` to your Info.plist
 
+### Cocoapods
+
+1. Add `pod 'Tatsi'` to your `Podfile`
+2. Run `pod install`
+3. Add `NSPhotoLibraryUsageDescription` to your Info.plist with a proper description.
+4. (Optional) if you want to use the camera option. You will also need to add `NSCameraUsageDescription` to your Info.plist
+
 ## Usage
 
 1. Add `Import Tatsi` and `Import Photos` to your Swift file. You can skip this step if you used manual installation.
