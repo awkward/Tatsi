@@ -36,6 +36,13 @@ extension PickerViewController where Self: UIViewController {
         return self.pickerViewController?.pickerDelegate
     }
     
+    func didSelectCollection(_ collection: PHAssetCollection) {
+        guard let viewController = self.pickerViewController else {
+            return
+        }
+        self.delegate?.pickerViewController(viewController, didSelectCollection: collection)
+    }
+    
     func finishPicking(with assets: [PHAsset]) {
         guard let viewController = self.pickerViewController else {
             return

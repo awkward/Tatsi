@@ -261,6 +261,7 @@ extension AlbumsViewController {
             let gridViewController = AssetsGridViewController(album: album)
             self.navigationController?.pushViewController(gridViewController, animated: true)
         }
+        self.didSelectCollection(album)
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
