@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,24 +20,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="50u-FM-ddp">
-                                <rect key="frame" x="80" y="278.5" width="215" height="110"/>
+                                <rect key="frame" x="60.5" y="238" width="254" height="191"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZH-ey-tdq">
-                                        <rect key="frame" x="0.0" y="0.0" width="215" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="254" height="30"/>
                                         <state key="normal" title="Show UIKit Picker"/>
                                         <connections>
                                             <action selector="showUIKitPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CKm-Vt-U9t"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PS-rH-el7">
-                                        <rect key="frame" x="0.0" y="40" width="215" height="30"/>
+                                        <rect key="frame" x="0.0" y="40" width="254" height="30"/>
                                         <state key="normal" title="Show Tatsi Picker"/>
                                         <connections>
                                             <action selector="showTatsiPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ReA-El-bFN"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4F-pv-cIX">
-                                        <rect key="frame" x="0.0" y="80" width="215" height="30"/>
+                                        <rect key="frame" x="0.0" y="80" width="254" height="30"/>
                                         <state key="normal" title="Show Tatsi Picker (Single View)"/>
                                         <connections>
                                             <action selector="showSingleViewTatsiPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OKE-KL-ZPV"/>
@@ -50,6 +50,20 @@
                                             <action selector="showTatsiPickerWithCustomColors:" destination="BYZ-38-t0r" eventType="touchUpInside" id="69M-C4-9g4"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gk2-Pn-L7o">
+                                        <rect key="frame" x="0.0" y="160" width="254" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open with last album" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLC-7F-Mrx">
+                                                <rect key="frame" x="0.0" y="0.0" width="205" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xvx-M4-svZ">
+                                                <rect key="frame" x="205" y="0.0" width="51" height="31"/>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -59,6 +73,9 @@
                             <constraint firstItem="50u-FM-ddp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="OvB-6h-7mh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="rememberCollectionSwitch" destination="xvx-M4-svZ" id="4Hx-bG-rOp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
