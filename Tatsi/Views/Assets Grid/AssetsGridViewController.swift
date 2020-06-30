@@ -24,7 +24,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             guard self.album != oldValue else {
                 return
             }
-            self.selectedAssets = []
+            if !(self.config?.keepSelectionBetweenAlbums ?? false) {
+                self.selectedAssets = []
+            }
             self.assets = []
             self.collectionView?.reloadData()
             
