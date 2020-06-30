@@ -18,6 +18,8 @@ final class ViewController: UIViewController {
     // It is not recommended to PHAssetCollection in persitant storage. If you do, check if the album is still available before showing the picker.
     private var lastSelectedCollection: PHAssetCollection?
     
+    private var selectedAssets = [PHAsset]()
+    
     // If the rememberCollectioSwitch is turned on we return the last known collection, if available.
     private var firstView: TatsiConfig.StartView {
         if self.rememberCollectionSwitch.isOn, let lastCollection = self.lastSelectedCollection {
@@ -84,6 +86,22 @@ final class ViewController: UIViewController {
         pickerViewController.modalPresentationStyle = .fullScreen
         self.present(pickerViewController, animated: true, completion: nil)
     }
+    
+    @IBAction private func showTatsiPickerKeepingSelection(_ sender: Any) {
+        var config = TatsiConfig.default
+        
+        config.keepSelectionBetweenAlbums = true
+        config.preselectedAssets = self.selectedAssets
+        
+        config.showCameraOption = true
+        config.supportedMediaTypes = [.video, .image]
+        config.firstView = self.firstView
+        config.maxNumberOfSelections = 50
+        
+        let pickerViewController = TatsiPickerViewController(config: config)
+        pickerViewController.pickerDelegate = self
+        self.present(pickerViewController, animated: true, completion: nil)
+    }
 
 }
 
@@ -107,6 +125,7 @@ extension ViewController: TatsiPickerViewControllerDelegate {
     
     func pickerViewController(_ pickerViewController: TatsiPickerViewController, didPickAssets assets: [PHAsset]) {
         pickerViewController.dismiss(animated: true, completion: nil)
+        self.selectedAssets = assets
         print("Picked assets: \(assets)")
     }
 

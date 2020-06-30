@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="50u-FM-ddp">
-                                <rect key="frame" x="60.5" y="238" width="254" height="191"/>
+                                <rect key="frame" x="60.5" y="218" width="254" height="231"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZH-ey-tdq">
                                         <rect key="frame" x="0.0" y="0.0" width="254" height="30"/>
@@ -50,8 +50,15 @@
                                             <action selector="showTatsiPickerWithCustomColors:" destination="BYZ-38-t0r" eventType="touchUpInside" id="69M-C4-9g4"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qs-vy-Yvi">
+                                        <rect key="frame" x="0.0" y="160" width="254" height="30"/>
+                                        <state key="normal" title="Show Tatsi Picker Keeping Selection"/>
+                                        <connections>
+                                            <action selector="showTatsiPickerKeepingSelection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vi5-j8-hZL"/>
+                                        </connections>
+                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gk2-Pn-L7o">
-                                        <rect key="frame" x="0.0" y="160" width="254" height="31"/>
+                                        <rect key="frame" x="0.0" y="200" width="254" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open with last album" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLC-7F-Mrx">
                                                 <rect key="frame" x="0.0" y="0.0" width="205" height="31"/>
