@@ -90,6 +90,9 @@ public struct TatsiConfig {
             LocalizableStrings.tableName = localizableStringsTableName
         }
     }
+    
+    /// Set this to a number of PHAsset instances that were selected before the picker was opened.
+    public var preselectedAssets: [PHAsset]? = nil
 
     // MARK: - Internal features
     

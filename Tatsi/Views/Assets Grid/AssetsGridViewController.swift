@@ -34,9 +34,12 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    internal fileprivate(set) var selectedAssets = [PHAsset]() {
-        didSet {
-            self.reloadDoneButtonState()
+    internal fileprivate(set) var selectedAssets: [PHAsset] {
+        get {
+            self.pickerViewController?.selectedAssets ?? []
+        }
+        set {
+            self.pickerViewController?.selectedAssets = newValue
         }
     }
     
@@ -464,6 +467,7 @@ extension AssetsGridViewController {
             self.present(cameraController, animated: true, completion: nil)
             collectionView.deselectItem(at: indexPath, animated: true)
         }
+        self.reloadDoneButtonState()
     }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -471,6 +475,7 @@ extension AssetsGridViewController {
             return
         }
         self.selectedAssets.remove(at: index)
+        self.reloadDoneButtonState()
     }
     
 }

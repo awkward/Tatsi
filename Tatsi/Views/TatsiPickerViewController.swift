@@ -16,6 +16,9 @@ final public class TatsiPickerViewController: UINavigationController {
     public let config: TatsiConfig
     
     public weak var pickerDelegate: TatsiPickerViewControllerDelegate?
+    
+    // Contains all the selected assets the user has selected. If "keepSelectionBetweenAlbums" is turned off this array can reset when changing albums.
+    internal var selectedAssets = [PHAsset]()
 
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         return self.config.preferredStatusBarStyle
@@ -29,6 +32,8 @@ final public class TatsiPickerViewController: UINavigationController {
 
         navigationBar.barTintColor = config.colors.background
         navigationBar.tintColor = config.colors.link
+        
+        self.selectedAssets = config.preselectedAssets ?? []
 
         self.setIntialViewController()
     }
