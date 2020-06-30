@@ -1,8 +1,8 @@
 
 language: swift
-osx_image: xcode10.1
-xcode_sdk: iphonesimulator11.4
+osx_image: xcode11.5
+xcode_sdk: iphonesimulator13.5
 script:
-  - xcodebuild clean build -project Tatsi.xcodeproj -scheme Tatsi -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.4'
+  - xcodebuild clean build -project Tatsi.xcodeproj -scheme Tatsi -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.5'
 # Testing has been removed for now because the tests require photos access, which can not be automaticlly granted in unit tests.
 # - xcodebuild clean build test -project Tatsi.xcodeproj -scheme Tatsi -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1'
