@@ -62,15 +62,17 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         view.isHidden = true
         view.backgroundColor = UIColor.white.withAlphaComponent(0.4)
         
-        let iconView = SelectionIconView()
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        // At this point the config is not yet set, so no color info available
-        // iconView.tintColor = TatsiConfig.default.colors.checkMark
-        view.addSubview(iconView)
+        view.addSubview(self.iconView)
         view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
         view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 3).isActive = true
         
         return view
+    }()
+    
+    lazy private var iconView: SelectionIconView = {
+        let iconView = SelectionIconView()
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        return iconView
     }()
     
     override init(frame: CGRect) {
@@ -122,7 +124,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.shouldUpdateImage = false
         
         // Set the correct checkmark color
-        self.contentView.subviews[2].subviews[0].tintColor = self.colors?.checkMark ?? TatsiConfig.default.colors.checkMark
+        self.iconView.tintColor = self.colors?.checkMark
         
         self.startLoadingImage()
     }
