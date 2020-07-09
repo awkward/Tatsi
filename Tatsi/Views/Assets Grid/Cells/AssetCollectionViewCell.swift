@@ -15,6 +15,8 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         return "asset-cell"
     }
     
+    internal var colors: TatsiColors?
+    
     internal var imageSize: CGSize = CGSize(width: 100, height: 100) {
         didSet {
             guard self.imageSize != oldValue else {
@@ -62,7 +64,8 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         
         let iconView = SelectionIconView()
         iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.tintColor = TatsiConfig.default.colors.link
+        // At this point the config is not yet set, so no color info available
+        // iconView.tintColor = TatsiConfig.default.colors.checkMark
         view.addSubview(iconView)
         view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
         view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 3).isActive = true
@@ -117,6 +120,10 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             return
         }
         self.shouldUpdateImage = false
+        
+        // Set the correct checkmark color
+        self.contentView.subviews[2].subviews[0].tintColor = self.colors?.checkMark ?? TatsiConfig.default.colors.checkMark
+        
         self.startLoadingImage()
     }
     

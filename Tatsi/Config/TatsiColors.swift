@@ -21,6 +21,9 @@ public protocol TatsiColors {
 
     /// The color for secondary labels like descriptions.
     var secondaryLabel: UIColor { get }
+    
+    /// The color for the checkmark when selecting an image
+    var checkMark: UIColor { get }
 }
 
 /// Defines the default colors for Tatsi.
@@ -54,6 +57,14 @@ public struct TatsiDefaultColors: TatsiColors {
             return .secondaryLabel
         } else {
             return .gray
+        }
+    }()
+    
+    public let checkMark: UIColor = {
+        if #available(iOS 13.0, *) {
+            return .link
+        } else {
+            return UIColor(red: 0.33, green: 0.63, blue: 0.97, alpha: 1.00)
         }
     }()
 }
