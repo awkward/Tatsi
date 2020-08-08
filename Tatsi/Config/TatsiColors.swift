@@ -26,8 +26,18 @@ public protocol TatsiColors {
     var checkMark: UIColor? { get }
 }
 
+extension TatsiColors {
+    
+    public var checkMark: UIColor? {
+        // Supply a default option to keep compatibility.
+        return nil
+    }
+    
+}
+
 /// Defines the default colors for Tatsi.
 public struct TatsiDefaultColors: TatsiColors {
+    
     public var background: UIColor = {
         if #available(iOS 13.0, *) {
             return .systemBackground
@@ -59,6 +69,5 @@ public struct TatsiDefaultColors: TatsiColors {
             return .gray
         }
     }()
-
-    public var checkMark: UIColor?
+    
 }

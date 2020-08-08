@@ -124,7 +124,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.shouldUpdateImage = false
         
         // Set the correct checkmark color
-        self.iconView.tintColor = self.colors?.checkMark
+        self.iconView.tintColor = self.colors?.checkMark ?? self.colors?.link
         
         self.startLoadingImage()
     }

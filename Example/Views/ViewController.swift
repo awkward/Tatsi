@@ -33,7 +33,7 @@ final class ViewController: UIViewController {
         var link: UIColor = UIColor(red: 10/255, green: 132/255, blue: 255/255, alpha: 255/255)
         var label: UIColor = UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 255/255)
         var secondaryLabel: UIColor = UIColor(red: 152/255, green: 151/255, blue: 159/255, alpha: 255/255)
-        var checkMark: UIColor? = UIColor.red
+        var checkMark: UIColor? = .red
     }
     
     
