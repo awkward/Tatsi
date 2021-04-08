@@ -125,6 +125,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PHPhotoLibrary.shared().register(self)
+        
         self.collectionView?.register(AssetCollectionViewCell.self, forCellWithReuseIdentifier: AssetCollectionViewCell.reuseIdentifier)
         self.collectionView?.register(CameraCollectionViewCell.self, forCellWithReuseIdentifier: CameraCollectionViewCell.reuseIdentifier)
         
@@ -144,6 +146,10 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             // needed because iOS 13 does not call traitCollectionDidChange after being added to the view hierarchy like older iOS versions
             self.updateCollectionViewLayout()
         }
+    }
+    
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -503,6 +509,17 @@ extension AssetsGridViewController: AlbumsViewControllerDelegate {
         animator.startAnimation()
     }
     
+}
+
+// MARK: - PHPhotoLibraryChangeObserver
+
+extension AssetsGridViewController: PHPhotoLibraryChangeObserver {
+    
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        DispatchQueue.main.async {
+            self.startFetchingAssets()
+        }
+    }
 }
 
 // MARK: - UIImagePickerControllerDelegate
