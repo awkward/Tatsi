@@ -10,7 +10,7 @@ import UIKit
 import Photos
 
 /// Defines a number of methods that will be called throughout the lifecycle of the TatsiPickerViewController. See the config for more options.
-public protocol TatsiPickerViewControllerDelegate: class {
+public protocol TatsiPickerViewControllerDelegate: AnyObject {
 
     /// Called when the user has selected assets (and tapped the done button).
     ///
