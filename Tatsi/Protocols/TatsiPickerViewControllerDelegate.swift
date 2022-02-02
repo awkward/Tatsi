@@ -45,7 +45,7 @@ public protocol TatsiPickerViewControllerDelegate: AnyObject {
     ///
     /// - Parameter pickerViewController: The picker view controller the done button will be placed in.
     /// - Returns: The done button that should be used inside the picker view controller.
-    func doneBarButtonItem(for pickerViewController: TatsiPickerViewController) -> UIBarButtonItem?
+    func doneBarButtonItem(for pickerViewController: TatsiPickerViewController) -> UIButton?
 }
 
 extension TatsiPickerViewControllerDelegate {
@@ -63,7 +63,7 @@ extension TatsiPickerViewControllerDelegate {
         return nil
     }
     
-    public func doneBarButtonItem(for pickerViewController: TatsiPickerViewController) -> UIBarButtonItem? {
+    public func doneBarButtonItem(for pickerViewController: TatsiPickerViewController) -> UIButton? {
         return nil
     }
     
