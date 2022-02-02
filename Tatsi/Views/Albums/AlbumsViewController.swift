@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-internal protocol AlbumsViewControllerDelegate: class {
+internal protocol AlbumsViewControllerDelegate: AnyObject {
     
     /// Called when an album is selected in the album list.
     ///
