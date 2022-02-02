@@ -100,14 +100,22 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    lazy fileprivate var doneButton: UIBarButtonItem = {
-        let buttonitem = self.pickerViewController?.customDoneButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
-        buttonitem.target = self
-        buttonitem.action = #selector(AssetsGridViewController.done(_:))
-        buttonitem.accessibilityIdentifier = "tatsi.button.done"
-        buttonitem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
-        return buttonitem
-    }()
+  lazy fileprivate var doneButton: UIBarButtonItem = {
+    // If we have a custom button bar item that uses a UIButton, we cannot leverage the `target` and `action` for the UIButtonBar. We must use the UIButton.addTarget
+    if let button = self.pickerViewController?.customDoneButtonItem() {
+      button.addTarget(self, action: #selector(done), for: .touchUpInside)
+      let doneBarButton = UIBarButtonItem(customView: button)
+      doneBarButton.accessibilityIdentifier = "tatsi.button.done"
+      doneBarButton.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
+      return doneBarButton
+    } else {
+      // We use the default
+      let defaultDoneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+      defaultDoneBarButton.accessibilityIdentifier = "tatsi.button.done"
+      defaultDoneBarButton.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
+      return defaultDoneBarButton
+    }
+  }()
     
     // MARK: - Initializers
     

@@ -79,7 +79,7 @@ final public class TatsiPickerViewController: UINavigationController {
         return self.pickerDelegate?.cancelBarButtonItem(for: self)
     }
     
-    internal func customDoneButtonItem() -> UIBarButtonItem? {
+    internal func customDoneButtonItem() -> UIButton? {
         return self.pickerDelegate?.doneBarButtonItem(for: self)
     }
 
