@@ -11,50 +11,50 @@ import Photos
 import UIKit
 
 protocol PickerViewController {
-    
-    var pickerViewController: TatsiPickerViewController? { get }
-    
-    var config: TatsiConfig? { get }
-    
-    func finishPicking(with assets: [PHAsset])
-    
-    func cancelPicking()
-    
+  
+  var pickerViewController: TatsiPickerViewController? { get }
+  
+  var config: TatsiConfig? { get }
+  
+  func finishPicking(with assets: [PHAsset])
+  
+  func cancelPicking()
+  
 }
 
 extension PickerViewController where Self: UIViewController {
-    
-    var pickerViewController: TatsiPickerViewController? {
-        return self.navigationController as? TatsiPickerViewController
+  
+  var pickerViewController: TatsiPickerViewController? {
+    return self.navigationController as? TatsiPickerViewController
+  }
+  
+  var config: TatsiConfig? {
+    return self.pickerViewController?.config
+  }
+  
+  var delegate: TatsiPickerViewControllerDelegate? {
+    return self.pickerViewController?.pickerDelegate
+  }
+  
+  func didSelectCollection(_ collection: PHAssetCollection) {
+    guard let viewController = self.pickerViewController else {
+      return
     }
-    
-    var config: TatsiConfig? {
-        return self.pickerViewController?.config
+    self.delegate?.pickerViewController(viewController, didSelectCollection: collection)
+  }
+  
+  func finishPicking(with assets: [PHAsset]) {
+    guard let viewController = self.pickerViewController else {
+      return
     }
-    
-    var delegate: TatsiPickerViewControllerDelegate? {
-        return self.pickerViewController?.pickerDelegate
+    self.delegate?.pickerViewController(viewController, didPickAssets: assets)
+  }
+  
+  func cancelPicking() {
+    guard let viewController = self.pickerViewController else {
+      return
     }
-    
-    func didSelectCollection(_ collection: PHAssetCollection) {
-        guard let viewController = self.pickerViewController else {
-            return
-        }
-        self.delegate?.pickerViewController(viewController, didSelectCollection: collection)
-    }
-    
-    func finishPicking(with assets: [PHAsset]) {
-        guard let viewController = self.pickerViewController else {
-            return
-        }
-        self.delegate?.pickerViewController(viewController, didPickAssets: assets)
-    }
-    
-    func cancelPicking() {
-        guard let viewController = self.pickerViewController else {
-            return
-        }
-        self.delegate?.pickerViewControllerDidCancel(viewController)
-    }
-    
+    self.delegate?.pickerViewControllerDidCancel(viewController)
+  }
+  
 }
