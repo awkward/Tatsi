@@ -26,7 +26,7 @@ final class PHAssetCollectionExtensionsTests: TatsiTestCase {
   func testContainsRecentlyDeleted() {
     var foundRecentlyDeleted = false
     let collections = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
-    collections.enumerateObjects({ (assetCollection, _, _) in
+    collections.enumerateObjects({ assetCollection, _, _ in
       if assetCollection.isRecentlyDeletedCollection {
         foundRecentlyDeleted = true
       }
@@ -39,7 +39,7 @@ final class PHAssetCollectionExtensionsTests: TatsiTestCase {
   func testContainsUserLibrary() {
     var foundUserLibrary = false
     let collections = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: nil)
-    collections.enumerateObjects({ (assetCollection, _, _) in
+    collections.enumerateObjects({ assetCollection, _, _ in
       if assetCollection.isUserLibrary {
         foundUserLibrary = true
       }

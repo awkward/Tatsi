@@ -31,27 +31,27 @@ final internal class AssetMetadataView: UIView {
   /// The asset the meta data should be displayed for.
   var asset: PHAsset? {
     didSet {
-      guard let asset = self.asset else {
-        self.isHidden = true
+      guard let asset = asset else {
+        isHidden = true
         return
       }
-      self.timeLabel.isHidden = asset.duration <= 0 || !self.showDuration
-      self.timeLabel.text = self.string(from: asset.duration)
+      timeLabel.isHidden = asset.duration <= 0 || !showDuration
+      timeLabel.text = string(from: asset.duration)
       
-      self.iconView.isHidden = !asset.isFavorite
-      self.iconView.icon = .favorite
+      iconView.isHidden = !asset.isFavorite
+      iconView.icon = .favorite
       
-      self.isHidden = self.timeLabel.isHidden && self.iconView.isHidden
+      isHidden = timeLabel.isHidden && iconView.isHidden
     }
   }
   
   init() {
     super.init(frame: CGRect())
     
-    self.isOpaque = false
-    self.backgroundColor = .clear
+    isOpaque = false
+    backgroundColor = .clear
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,20 +59,20 @@ final internal class AssetMetadataView: UIView {
   }
   
   private func setupView() {
-    self.addSubview(self.iconView)
-    self.addSubview(self.timeLabel)
+    addSubview(iconView)
+    addSubview(timeLabel)
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      iconView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      iconView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
       
-      self.timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.timeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.iconView.trailingAnchor, constant: 8),
-      self.trailingAnchor.constraint(equalTo: self.timeLabel.trailingAnchor, constant: 6)
+      timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+      timeLabel.leadingAnchor.constraint(greaterThanOrEqualTo: iconView.trailingAnchor, constant: 8),
+      trailingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 6)
     ]
     
     NSLayoutConstraint.activate(constraints)

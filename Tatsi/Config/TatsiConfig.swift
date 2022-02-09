@@ -94,21 +94,21 @@ public struct TatsiConfig {
   private var bannedAlbumSubtypes: [PHAssetCollectionSubtype] {
     var bannedAlbumSubtypes: [PHAssetCollectionSubtype] = []
     
-    if self.showRecentlyAddedAlbum == false {
+    if showRecentlyAddedAlbum == false {
       bannedAlbumSubtypes.append(.smartAlbumRecentlyAdded)
     }
     
-    if self.showHiddenAlbum == false {
+    if showHiddenAlbum == false {
       bannedAlbumSubtypes.append(.smartAlbumAllHidden)
     }
     
-    if self.supportedMediaTypes.contains(PHAssetMediaType.video) == false {
+    if supportedMediaTypes.contains(PHAssetMediaType.video) == false {
       bannedAlbumSubtypes.append(.smartAlbumVideos)
       bannedAlbumSubtypes.append(.smartAlbumTimelapses)
       bannedAlbumSubtypes.append(.smartAlbumSlomoVideos)
     }
     
-    if self.supportedMediaTypes.contains(PHAssetMediaType.image) == false {
+    if supportedMediaTypes.contains(PHAssetMediaType.image) == false {
       bannedAlbumSubtypes.append(.smartAlbumPanoramas)
       bannedAlbumSubtypes.append(.smartAlbumBursts)
       bannedAlbumSubtypes.append(.smartAlbumSelfPortraits)
@@ -133,12 +133,12 @@ public struct TatsiConfig {
     
     var predicates = [NSPredicate]()
     
-    let mediaTypePredicates = self.supportedMediaTypes.compactMap({ (mediaType) -> NSPredicate? in
+    let mediaTypePredicates = supportedMediaTypes.compactMap({ (mediaType) -> NSPredicate? in
       return NSPredicate(format: "(mediaType == %ld)", mediaType.rawValue)
     })
     predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: mediaTypePredicates))
     
-    if let mediaSubtypes = self.supportedMediaSubTypes {
+    if let mediaSubtypes = supportedMediaSubTypes {
       let mediaSubtypePredicates = mediaSubtypes.compactMap({ (mediaSubtype) -> NSPredicate? in
         return NSPredicate(format: "mediaSubtype == %d", mediaSubtype.rawValue)
       })
@@ -166,7 +166,7 @@ public struct TatsiConfig {
     
     if self.showEmptyAlbums == false {
       // If we don't allow empty albums, we hide the albums that have less than 1 asset.
-      guard !assetCollection.isEmpty(for: self.assetFetchOptions()) else {
+      guard !assetCollection.isEmpty(for: assetFetchOptions()) else {
         return false
       }
     }
@@ -177,11 +177,11 @@ public struct TatsiConfig {
     }
     
     /// We can only check the recently deleted collection based on its name at the moment.
-    if self.showRecentlyDeletedAlbum == false && assetCollection.isRecentlyDeletedCollection {
+    if showRecentlyDeletedAlbum == false && assetCollection.isRecentlyDeletedCollection {
       return false
     }
     
-    return !self.bannedAlbumSubtypes.contains(assetCollection.assetCollectionSubtype)
+    return !bannedAlbumSubtypes.contains(assetCollection.assetCollectionSubtype)
   }
   
 }

@@ -32,22 +32,22 @@ final internal class AlbumsTableHeaderView: UITableViewHeaderFooterView {
   
   internal var colors: TatsiColors? {
     didSet {
-      self.label.textColor = self.colors?.label ?? TatsiConfig.default.colors.label
-      self.backgroundView?.backgroundColor = self.colors?.background ?? TatsiConfig.default.colors.background
+      label.textColor = colors?.label ?? TatsiConfig.default.colors.label
+      backgroundView?.backgroundColor = colors?.background ?? TatsiConfig.default.colors.background
     }
   }
   
   internal var title: String? {
     didSet {
-      self.label.text = self.title
-      self.accessibilityLabel = self.title
+      label.text = title
+      accessibilityLabel = title
     }
   }
   
   override init(reuseIdentifier: String?) {
     super.init(reuseIdentifier: reuseIdentifier)
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -55,18 +55,18 @@ final internal class AlbumsTableHeaderView: UITableViewHeaderFooterView {
   }
   
   private func setupView() {
-    self.contentView.addSubview(self.label)
-    self.backgroundView = UIView()
-    self.backgroundView?.backgroundColor = TatsiConfig.default.colors.background
+    contentView.addSubview(label)
+    backgroundView = UIView()
+    backgroundView?.backgroundColor = TatsiConfig.default.colors.background
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-      self.bottomAnchor.constraint(equalTo: self.label.bottomAnchor, constant: 4),
-      self.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.label.trailingAnchor)
+      label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+      bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 4),
+      layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: label.trailingAnchor)
     ]
     
     NSLayoutConstraint.activate(constraints)

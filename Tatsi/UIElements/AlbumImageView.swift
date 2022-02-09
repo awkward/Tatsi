@@ -12,22 +12,22 @@ final internal class AlbumImageView: UIView {
   
   var linesColor = UIColor.black {
     didSet {
-      self.setNeedsDisplay()
+      setNeedsDisplay()
     }
   }
   
   var placeholderColor = UIColor(red: 226 / 255, green: 225 / 255, blue: 230 / 255, alpha: 1) {
     didSet {
-      self.imageView.backgroundColor = self.placeholderColor
+      imageView.backgroundColor = placeholderColor
     }
   }
   
   var image: UIImage? {
     set {
-      self.imageView.image = newValue
+      imageView.image = newValue
     }
     get {
-      return self.imageView.image
+      return imageView.image
     }
   }
   
@@ -39,23 +39,23 @@ final internal class AlbumImageView: UIView {
     let imageView = UIImageView()
     imageView.clipsToBounds = true
     imageView.isOpaque = true
-    imageView.backgroundColor = self.placeholderColor
+    imageView.backgroundColor = placeholderColor
     imageView.contentMode = UIView.ContentMode.scaleAspectFill
     return imageView
   }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    self.setupView()
+    setupView()
   }
   
   func setupView() {
-    self.addSubview(self.imageView)
+    addSubview(self.imageView)
   }
   
   // Only override drawRect: if you perform custom drawing.
@@ -63,11 +63,11 @@ final internal class AlbumImageView: UIView {
   override func draw(_ rect: CGRect) {
     // Drawing code
     let firstLinePath = UIBezierPath(rect: CGRect(x: 7, y: 0, width: rect.width - ( 7 * 2 ), height: 1 / UIScreen.main.scale))
-    self.linesColor.withAlphaComponent(0.4).setFill()
+    linesColor.withAlphaComponent(0.4).setFill()
     firstLinePath.fill()
     
     let secondLinePath = UIBezierPath(rect: CGRect(x: 4, y: 2, width: rect.width - ( 4 * 2 ), height: 1 / UIScreen.main.scale))
-    self.linesColor.withAlphaComponent(0.6).setFill()
+    linesColor.withAlphaComponent(0.6).setFill()
     secondLinePath.fill()
   }
   
@@ -77,7 +77,7 @@ final internal class AlbumImageView: UIView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.imageView.frame = CGRect(x: 0, y: 4, width: self.bounds.width, height: self.bounds.height - 4)
+    imageView.frame = CGRect(x: 0, y: 4, width: bounds.width, height: bounds.height - 4)
   }
   
 }

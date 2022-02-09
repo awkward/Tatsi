@@ -23,7 +23,7 @@ final internal class CameraCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -31,21 +31,21 @@ final internal class CameraCollectionViewCell: UICollectionViewCell {
   }
   
   private func setupView() {
-    self.contentView.addSubview(self.iconView)
-    self.contentView.backgroundColor = UIColor.lightGray
+    contentView.addSubview(iconView)
+    contentView.backgroundColor = UIColor.lightGray
     
-    self.accessibilityIdentifier = "tatsi.cell.camera"
-    self.accessibilityLabel = LocalizableStrings.cameraButtonTitle
-    self.accessibilityTraits = UIAccessibilityTraits.button
-    self.isAccessibilityElement = true
+    accessibilityIdentifier = "tatsi.cell.camera"
+    accessibilityLabel = LocalizableStrings.cameraButtonTitle
+    accessibilityTraits = UIAccessibilityTraits.button
+    isAccessibilityElement = true
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.iconView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-      self.iconView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+      iconView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+      iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ]
     
     NSLayoutConstraint.activate(constraints)

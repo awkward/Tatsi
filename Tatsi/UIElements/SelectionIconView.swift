@@ -13,9 +13,9 @@ final internal class SelectionIconView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.backgroundColor = .clear
-    self.isOpaque = false
-    self.clipsToBounds = false
+    backgroundColor = .clear
+    isOpaque = false
+    clipsToBounds = false
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -23,7 +23,7 @@ final internal class SelectionIconView: UIView {
   }
   
   override func draw(_ rect: CGRect) {
-    self.drawIcon()
+    drawIcon()
   }
   
   override var intrinsicContentSize: CGSize {
@@ -50,7 +50,7 @@ final internal class SelectionIconView: UIView {
     
     //// Fill Drawing
     let fillPath = UIBezierPath(ovalIn: CGRect(x: 1, y: 1, width: 22, height: 22))
-    self.tintColor.setFill()
+    tintColor.setFill()
     fillPath.fill()
     
     //// Checkmark Drawing
