@@ -37,13 +37,13 @@ final internal class AssetTypeIconView: UIView {
   
   var color: UIColor = .white {
     didSet {
-      self.setNeedsDisplay()
+      setNeedsDisplay()
     }
   }
   
   var icon: Icon = .favorite {
     didSet {
-      self.setNeedsDisplay()
+      setNeedsDisplay()
     }
   }
   
@@ -52,8 +52,8 @@ final internal class AssetTypeIconView: UIView {
     
     self.icon = icon
     
-    self.isOpaque = false
-    self.backgroundColor = .clear
+    isOpaque = false
+    backgroundColor = .clear
   }
   
   required init?(coder aDecoder: NSCoder) {

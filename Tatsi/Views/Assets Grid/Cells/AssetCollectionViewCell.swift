@@ -19,10 +19,10 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
   
   internal var imageSize: CGSize = CGSize(width: 100, height: 100) {
     didSet {
-      guard self.imageSize != oldValue else {
+      guard imageSize != oldValue else {
         return
       }
-      self.shouldUpdateImage = true
+      shouldUpdateImage = true
     }
   }
   
@@ -30,12 +30,12 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
   
   internal var asset: PHAsset? {
     didSet {
-      self.metadataView.asset = self.asset
-      guard self.asset != oldValue || self.imageView.image == nil else {
+      metadataView.asset = asset
+      guard asset != oldValue || imageView.image == nil else {
         return
       }
-      self.accessibilityLabel = asset?.accessibilityLabel
-      self.shouldUpdateImage = true
+      accessibilityLabel = asset?.accessibilityLabel
+      shouldUpdateImage = true
     }
   }
   
@@ -62,7 +62,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     view.isHidden = true
     view.backgroundColor = UIColor.white.withAlphaComponent(0.4)
     
-    view.addSubview(self.iconView)
+    view.addSubview(iconView)
     view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
     view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 3).isActive = true
     
@@ -78,7 +78,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -86,74 +86,74 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
   }
   
   private func setupView() {
-    self.contentView.addSubview(self.imageView)
-    self.contentView.addSubview(self.metadataView)
-    self.contentView.addSubview(self.selectedOverlay)
+    contentView.addSubview(imageView)
+    contentView.addSubview(metadataView)
+    contentView.addSubview(selectedOverlay)
     
-    self.accessibilityIdentifier = "tatsi.cell.asset"
-    self.accessibilityTraits = UIAccessibilityTraits.image
-    self.isAccessibilityElement = true
+    accessibilityIdentifier = "tatsi.cell.asset"
+    accessibilityTraits = UIAccessibilityTraits.image
+    isAccessibilityElement = true
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-      self.imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-      self.contentView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor),
-      self.contentView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor),
+      imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+      imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+      contentView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
       
-      self.selectedOverlay.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-      self.selectedOverlay.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-      self.contentView.bottomAnchor.constraint(equalTo: self.selectedOverlay.bottomAnchor),
-      self.contentView.trailingAnchor.constraint(equalTo: self.selectedOverlay.trailingAnchor),
+      selectedOverlay.topAnchor.constraint(equalTo: contentView.topAnchor),
+      selectedOverlay.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      contentView.bottomAnchor.constraint(equalTo: selectedOverlay.bottomAnchor),
+      contentView.trailingAnchor.constraint(equalTo: selectedOverlay.trailingAnchor),
       
-      self.metadataView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
-      self.contentView.bottomAnchor.constraint(equalTo: self.metadataView.bottomAnchor),
-      self.contentView.rightAnchor.constraint(equalTo: self.metadataView.rightAnchor)
+      metadataView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+      contentView.bottomAnchor.constraint(equalTo: metadataView.bottomAnchor),
+      contentView.rightAnchor.constraint(equalTo: metadataView.rightAnchor)
     ]
     
     NSLayoutConstraint.activate(constraints)
   }
   
   internal func reloadContents() {
-    guard self.shouldUpdateImage else {
+    guard shouldUpdateImage else {
       return
     }
-    self.shouldUpdateImage = false
+    shouldUpdateImage = false
     
     // Set the correct checkmark color
-    self.iconView.tintColor = self.colors?.checkMark ?? self.colors?.link
+    iconView.tintColor = colors?.checkMark ?? colors?.link
     
-    self.startLoadingImage()
+    startLoadingImage()
   }
   
   override func prepareForReuse() {
     super.prepareForReuse()
     
-    self.imageView.image = nil
+    imageView.image = nil
     
-    if let currentRequest = self.currentRequest {
-      let imageManager = self.imageManager ?? PHImageManager.default()
+    if let currentRequest = currentRequest {
+      let imageManager = imageManager ?? PHImageManager.default()
       imageManager.cancelImageRequest(currentRequest)
     }
     
   }
   
   fileprivate func startLoadingImage() {
-    self.imageView.image = nil
-    guard let asset = self.asset else {
+    imageView.image = nil
+    guard let asset = asset else {
       return
     }
-    let imageManager = self.imageManager ?? PHImageManager.default()
+    let imageManager = imageManager ?? PHImageManager.default()
     
     let requestOptions = PHImageRequestOptions()
     requestOptions.resizeMode = PHImageRequestOptionsResizeMode.fast
     requestOptions.isSynchronous = false
     
-    self.imageView.contentMode = UIView.ContentMode.center
-    self.imageView.image = nil
+    imageView.contentMode = UIView.ContentMode.center
+    imageView.image = nil
     DispatchQueue.global(qos: .userInteractive).async { [weak self] in
       autoreleasepool {
         let scale = UIScreen.main.scale > 2 ? 2 : UIScreen.main.scale
@@ -177,7 +177,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
   
   override var isSelected: Bool {
     didSet {
-      self.selectedOverlay.isHidden = !self.isSelected
+      selectedOverlay.isHidden = !isSelected
     }
   }
 }

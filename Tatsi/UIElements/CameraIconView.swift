@@ -13,8 +13,8 @@ final internal class CameraIconView: UIView {
   
   init() {
     super.init(frame: CGRect())
-    self.backgroundColor = .clear
-    self.isOpaque = false
+    backgroundColor = .clear
+    isOpaque = false
   }
   
   required init?(coder aDecoder: NSCoder) {

@@ -25,36 +25,36 @@ protocol PickerViewController {
 extension PickerViewController where Self: UIViewController {
   
   var pickerViewController: TatsiPickerViewController? {
-    return self.navigationController as? TatsiPickerViewController
+    return navigationController as? TatsiPickerViewController
   }
   
   var config: TatsiConfig? {
-    return self.pickerViewController?.config
+    return pickerViewController?.config
   }
   
   var delegate: TatsiPickerViewControllerDelegate? {
-    return self.pickerViewController?.pickerDelegate
+    return pickerViewController?.pickerDelegate
   }
   
   func didSelectCollection(_ collection: PHAssetCollection) {
-    guard let viewController = self.pickerViewController else {
+    guard let viewController = pickerViewController else {
       return
     }
-    self.delegate?.pickerViewController(viewController, didSelectCollection: collection)
+    delegate?.pickerViewController(viewController, didSelectCollection: collection)
   }
   
   func finishPicking(with assets: [PHAsset]) {
     guard let viewController = self.pickerViewController else {
       return
     }
-    self.delegate?.pickerViewController(viewController, didPickAssets: assets)
+    delegate?.pickerViewController(viewController, didPickAssets: assets)
   }
   
   func cancelPicking() {
-    guard let viewController = self.pickerViewController else {
+    guard let viewController = pickerViewController else {
       return
     }
-    self.delegate?.pickerViewControllerDidCancel(viewController)
+    delegate?.pickerViewControllerDidCancel(viewController)
   }
   
 }

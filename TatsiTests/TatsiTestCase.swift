@@ -88,7 +88,7 @@ class TatsiTestCase: XCTestCase {
       self.addedAssetIdentifiers.append(contentsOf: assetIdentifiers)
       let result = PHAsset.fetchAssets(withLocalIdentifiers: assetIdentifiers, options: nil)
       var assets = [PHAsset]()
-      result.enumerateObjects({ (asset, _, _) in
+      result.enumerateObjects({ asset, _, _ in
         assets.append(asset)
       })
       if let collection = collection {
@@ -115,7 +115,7 @@ class TatsiTestCase: XCTestCase {
       }
       var collection: PHAssetCollection?
       let result = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [localIdentifier], options: nil)
-      result.enumerateObjects({ (assetCollection, _, _) in
+      result.enumerateObjects({ assetCollection, _, _ in
         collection = assetCollection
       })
       return collection

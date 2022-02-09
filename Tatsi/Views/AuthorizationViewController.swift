@@ -16,7 +16,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     label.numberOfLines = 0
     label.textAlignment = .center
     label.font = UIFont.preferredFont(forTextStyle: .title2)
-    label.textColor = self.config?.colors.label ?? TatsiConfig.default.colors.label
+    label.textColor = config?.colors.label ?? TatsiConfig.default.colors.label
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -26,7 +26,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     label.numberOfLines = 0
     label.textAlignment = .center
     label.font = UIFont.preferredFont(forTextStyle: .body)
-    label.textColor = self.config?.colors.secondaryLabel ?? TatsiConfig.default.colors.secondaryLabel
+    label.textColor = config?.colors.secondaryLabel ?? TatsiConfig.default.colors.secondaryLabel
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -38,13 +38,13 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     button.translatesAutoresizingMaskIntoConstraints = false
     button.accessibilityIdentifier = "tatsi.button.openSettings"
     
-    let color = self.config?.colors.link ?? TatsiConfig.default.colors.link
+    let color = config?.colors.link ?? TatsiConfig.default.colors.link
     button.setTitleColor(color, for: .normal)
     return button
   }()
   
   lazy private var stackView: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [self.titleLabel, self.messageLabel, self.settingsButton])
+    let stackView = UIStackView(arrangedSubviews: [titleLabel, messageLabel, settingsButton])
     stackView.axis = .vertical
     stackView.spacing = 10
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,32 +53,32 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
   }()
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return self.config?.preferredStatusBarStyle ?? .default
+    return config?.preferredStatusBarStyle ?? .default
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.view.backgroundColor = self.config?.colors.background ?? TatsiConfig.default.colors.background
+    view.backgroundColor = config?.colors.background ?? TatsiConfig.default.colors.background
     
-    self.setupView()
+    setupView()
   }
   
   private func setupView() {
-    self.view.addSubview(self.stackView)
+    view.addSubview(stackView)
     
-    self.reloadContents()
+    reloadContents()
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      self.stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-      self.stackView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
-      self.view.trailingAnchor.constraint(greaterThanOrEqualTo: self.stackView.trailingAnchor),
-      self.stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200)
+      stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+      view.trailingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor),
+      stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 200)
     ]
     
     NSLayoutConstraint.activate(constraints)
@@ -101,13 +101,13 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
   private func reloadContents() {
     switch PHPhotoLibrary.authorizationStatus() {
     case .notDetermined:
-      self.titleLabel.text = LocalizableStrings.authorizationViewRequestingAccessTitle
-      self.messageLabel.text = LocalizableStrings.authorizationViewRequestingAccessMessage
-      self.settingsButton.isHidden = true
+      titleLabel.text = LocalizableStrings.authorizationViewRequestingAccessTitle
+      messageLabel.text = LocalizableStrings.authorizationViewRequestingAccessMessage
+      settingsButton.isHidden = true
     case .denied, .restricted:
-      self.titleLabel.text = LocalizableStrings.authorizationViewNoAccessTitle
-      self.messageLabel.text = LocalizableStrings.authorizationViewNoAccessMessage
-      self.settingsButton.isHidden = false
+      titleLabel.text = LocalizableStrings.authorizationViewNoAccessTitle
+      messageLabel.text = LocalizableStrings.authorizationViewNoAccessMessage
+      settingsButton.isHidden = false
     default:
       break
     }

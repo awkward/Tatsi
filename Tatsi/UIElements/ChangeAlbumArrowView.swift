@@ -13,8 +13,8 @@ internal class ChangeAlbumArrowView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = .clear
-    self.isOpaque = false
+    backgroundColor = .clear
+    isOpaque = false
   }
   
   required init?(coder aDecoder: NSCoder) {

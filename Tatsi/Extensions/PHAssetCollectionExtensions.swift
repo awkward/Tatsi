@@ -57,7 +57,7 @@ extension PHAssetCollection {
   }
   
   internal func isEmpty(for fetchOptions: PHFetchOptions? = nil) -> Bool {
-    guard self.estimatedAssetCount > 0 || self.estimatedAssetCount == NSNotFound else {
+    guard estimatedAssetCount > 0 || estimatedAssetCount == NSNotFound else {
       return true
     }
     if let fetchOptions = fetchOptions?.copy() as? PHFetchOptions {
@@ -70,12 +70,12 @@ extension PHAssetCollection {
   
   internal var isRecentlyDeletedCollection: Bool {
     // The recently deleted collection can only be a smart album.
-    guard self.assetCollectionType == .smartAlbum else {
+    guard assetCollectionType == .smartAlbum else {
       return false
     }
     
     /// Currently there is no app store passable or reliable way to check if the album is the "recently deleted" album. That's why we simply check the title.
-    guard let title = self.localizedTitle?.lowercased() else {
+    guard let title = localizedTitle?.lowercased() else {
       return false
     }
     let collectionNames = [
@@ -90,7 +90,7 @@ extension PHAssetCollection {
   }
   
   internal var isUserLibrary: Bool {
-    return self.assetCollectionType == .smartAlbum && self.assetCollectionSubtype == .smartAlbumUserLibrary
+    return assetCollectionType == .smartAlbum && assetCollectionSubtype == .smartAlbumUserLibrary
   }
   
 }

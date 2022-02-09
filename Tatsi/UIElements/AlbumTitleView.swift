@@ -14,20 +14,20 @@ final class AlbumTitleView: UIControl {
   /// The title that should be displayed. This can be the name of the album.
   var title: String? {
     didSet {
-      self.accessibilityLabel = self.title
-      self.titleLabel.text = self.title
+      accessibilityLabel = title
+      titleLabel.text = title
     }
   }
   
   /// If the arrow should flip 180 degrees. Can be used in an animation block.
   var flipArrow: Bool = false {
     didSet {
-      guard self.flipArrow != oldValue else {
+      guard flipArrow != oldValue else {
         return
       }
       let radians: CGFloat = 180 * (CGFloat.pi / 180)
-      self.arrowIconView.transform = self.flipArrow ? CGAffineTransform(rotationAngle: radians) : .identity
-      self.accessibilityHint = self.flipArrow ? LocalizableStrings.accessibilityActivateToHideAlbumList : LocalizableStrings.accessibilityActivateToShowAlbumList
+      arrowIconView.transform = flipArrow ? CGAffineTransform(rotationAngle: radians) : .identity
+      accessibilityHint = flipArrow ? LocalizableStrings.accessibilityActivateToHideAlbumList : LocalizableStrings.accessibilityActivateToShowAlbumList
     }
   }
   
@@ -64,15 +64,15 @@ final class AlbumTitleView: UIControl {
     didSet {
       guard let colors = colors else { return }
       
-      self.titleLabel.textColor = colors.label
-      self.directionLabel.textColor = colors.secondaryLabel
+      titleLabel.textColor = colors.label
+      directionLabel.textColor = colors.secondaryLabel
     }
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -80,13 +80,13 @@ final class AlbumTitleView: UIControl {
   }
   
   private func setupView() {
-    self.addSubview(self.titleLabel)
-    self.addSubview(self.arrowIconView)
-    self.addSubview(self.directionLabel)
+    addSubview(titleLabel)
+    addSubview(arrowIconView)
+    addSubview(directionLabel)
     
-    self.isAccessibilityElement = true
-    self.accessibilityTraits = UIAccessibilityTraits.button
-    self.accessibilityHint = LocalizableStrings.accessibilityActivateToShowAlbumList
+    isAccessibilityElement = true
+    accessibilityTraits = UIAccessibilityTraits.button
+    accessibilityHint = LocalizableStrings.accessibilityActivateToShowAlbumList
   }
   
   override func layoutSubviews() {
@@ -96,29 +96,29 @@ final class AlbumTitleView: UIControl {
     
     let arrowIconOffset = CGPoint(x: 3, y: 2)
     
-    var titleLabelSize = self.titleLabel.intrinsicContentSize
+    var titleLabelSize = titleLabel.intrinsicContentSize
     titleLabelSize.width = min(titleLabelSize.width, bounds.width)
     var titleLabelOrigin = CGPoint()
     
-    var arrowIconViewSize = self.arrowIconView.intrinsicContentSize
+    var arrowIconViewSize = arrowIconView.intrinsicContentSize
     arrowIconViewSize.width = min(arrowIconViewSize.width, bounds.width)
     var arrowIconViewOrigin = CGPoint()
     
-    var directionLabelSize = self.directionLabel.intrinsicContentSize
+    var directionLabelSize = directionLabel.intrinsicContentSize
     directionLabelSize.width = min(directionLabelSize.width, bounds.width)
     var directionLabelOrigin = CGPoint()
     
-    titleLabelOrigin.x = (self.bounds.width - (titleLabelSize.width + arrowIconViewSize.width + arrowIconOffset.x)) / 2
+    titleLabelOrigin.x = (bounds.width - (titleLabelSize.width + arrowIconViewSize.width + arrowIconOffset.x)) / 2
     arrowIconViewOrigin.x = titleLabelOrigin.x + titleLabelSize.width + arrowIconOffset.x
-    directionLabelOrigin.x = (self.bounds.width - directionLabelSize.width) / 2
+    directionLabelOrigin.x = (bounds.width - directionLabelSize.width) / 2
     
-    titleLabelOrigin.y = (self.bounds.height - (titleLabelSize.height + directionLabelSize.height)) / 2
+    titleLabelOrigin.y = (bounds.height - (titleLabelSize.height + directionLabelSize.height)) / 2
     arrowIconViewOrigin.y = titleLabelOrigin.y + ((titleLabelSize.height - arrowIconViewSize.height) / 2) + arrowIconOffset.y
     directionLabelOrigin.y = titleLabelOrigin.y + titleLabelSize.height
     
-    self.titleLabel.frame = CGRect(origin: titleLabelOrigin, size: titleLabelSize)
-    self.arrowIconView.frame = CGRect(origin: arrowIconViewOrigin, size: arrowIconViewSize)
-    self.directionLabel.frame = CGRect(origin: directionLabelOrigin, size: directionLabelSize)
+    titleLabel.frame = CGRect(origin: titleLabelOrigin, size: titleLabelSize)
+    arrowIconView.frame = CGRect(origin: arrowIconViewOrigin, size: arrowIconViewSize)
+    directionLabel.frame = CGRect(origin: directionLabelOrigin, size: directionLabelSize)
   }
   
 }

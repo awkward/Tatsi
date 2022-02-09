@@ -56,7 +56,7 @@ final internal class AlbumEmptyView: UIView {
   }()
   
   lazy private var stackView: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [self.titleLabel, self.messageLabel])
+    let stackView = UIStackView(arrangedSubviews: [titleLabel, messageLabel])
     stackView.axis = .vertical
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.spacing = 14
@@ -67,8 +67,8 @@ final internal class AlbumEmptyView: UIView {
     didSet {
       guard let colors = colors else { return }
       
-      self.titleLabel.textColor = colors.label
-      self.messageLabel.textColor = colors.secondaryLabel
+      titleLabel.textColor = colors.label
+      messageLabel.textColor = colors.secondaryLabel
     }
   }
   
@@ -77,7 +77,7 @@ final internal class AlbumEmptyView: UIView {
     
     super.init(frame: CGRect())
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -85,22 +85,22 @@ final internal class AlbumEmptyView: UIView {
   }
   
   private func setupView() {
-    self.addSubview(self.stackView)
+    addSubview(stackView)
     
-    self.titleLabel.text = self.state.title
-    self.messageLabel.text = self.state.message
-    self.messageLabel.isHidden = self.messageLabel.text == nil
+    titleLabel.text = state.title
+    messageLabel.text = state.message
+    messageLabel.isHidden = messageLabel.text == nil
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     let constraints = [
-      self.stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      self.stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.stackView.leadingAnchor.constraint(greaterThanOrEqualTo: self.layoutMarginsGuide.leadingAnchor),
-      self.trailingAnchor.constraint(greaterThanOrEqualTo: self.layoutMarginsGuide.trailingAnchor),
-      self.stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 250)
+      stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+      stackView.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor),
+      trailingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.trailingAnchor),
+      stackView.widthAnchor.constraint(lessThanOrEqualToConstant: 250)
     ]
     
     NSLayoutConstraint.activate(constraints)

@@ -46,7 +46,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
   }()
   
   lazy private var labelsStackView: UIStackView = {
-    let stackView = UIStackView(arrangedSubviews: [self.titleLabel, self.countLabel])
+    let stackView = UIStackView(arrangedSubviews: [titleLabel, countLabel])
     stackView.axis = .vertical
     stackView.spacing = 2
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,15 +55,15 @@ final internal class AlbumTableViewCell: UITableViewCell {
   
   var album: PHAssetCollection? {
     didSet {
-      self.albumChanged = self.album != oldValue
+      albumChanged = album != oldValue
     }
   }
   
   var colors: TatsiColors? {
     didSet {
-      self.backgroundColor = self.colors?.background ?? TatsiConfig.default.colors.background
-      self.titleLabel.textColor = self.colors?.label ?? TatsiConfig.default.colors.label
-      self.countLabel.textColor = self.colors?.secondaryLabel ?? TatsiConfig.default.colors.secondaryLabel
+      backgroundColor = colors?.background ?? TatsiConfig.default.colors.background
+      titleLabel.textColor = colors?.label ?? TatsiConfig.default.colors.label
+      countLabel.textColor = colors?.secondaryLabel ?? TatsiConfig.default.colors.secondaryLabel
     }
   }
   
@@ -72,7 +72,7 @@ final internal class AlbumTableViewCell: UITableViewCell {
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     
-    self.setupView()
+    setupView()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -80,68 +80,67 @@ final internal class AlbumTableViewCell: UITableViewCell {
   }
   
   private func setupView() {
-    self.contentView.addSubview(self.albumImageView)
-    self.contentView.addSubview(self.labelsStackView)
+    contentView.addSubview(albumImageView)
+    contentView.addSubview(labelsStackView)
     
-    self.accessibilityIdentifier = "tatsi.cell.album"
+    accessibilityIdentifier = "tatsi.cell.album"
     
-    self.accessoryType = .disclosureIndicator
+    accessoryType = .disclosureIndicator
     
-    self.setupConstraints()
+    setupConstraints()
   }
   
   private func setupConstraints() {
     
     let constraints = [
-      self.albumImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-      self.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.albumImageView.bottomAnchor),
+      albumImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+      layoutMarginsGuide.bottomAnchor.constraint(equalTo: albumImageView.bottomAnchor),
       
-      self.labelsStackView.centerYAnchor.constraint(equalTo: self.albumImageView.centerYAnchor),
-      self.labelsStackView.leadingAnchor.constraint(equalTo: self.albumImageView.trailingAnchor, constant: 16),
-      self.layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: self.labelsStackView.trailingAnchor)
-      
+      labelsStackView.centerYAnchor.constraint(equalTo: albumImageView.centerYAnchor),
+      labelsStackView.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 16),
+      layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: labelsStackView.trailingAnchor)
     ]
     
     NSLayoutConstraint.activate(constraints)
   }
   
   func reloadContents(with options: PHFetchOptions?) {
-    guard self.albumChanged else {
+    guard albumChanged else {
       return
     }
-    self.albumChanged = false
+    albumChanged = false
     
-    self.titleLabel.text = self.album?.localizedTitle
+    titleLabel.text = album?.localizedTitle
     
     let fetchOptions = options
-    let count = self.album?.estimatedAssetCount ?? 0
+    let count = album?.estimatedAssetCount ?? 0
     
     //First we set a temporary count that might not represent the actual count
     if count != NSNotFound {
-      self.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
+      countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
     } else {
-      self.countLabel.text = "0"
+      countLabel.text = "0"
     }
     
-    self.accessibilityLabel = self.album?.localizedTitle
-    self.accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
+    accessibilityLabel = album?.localizedTitle
+    accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
     
-    self.album?.fetchNumberOfItems(for: fetchOptions, completionHandler: { [weak self] (count, collection) in
+    album?.fetchNumberOfItems(for: fetchOptions, completionHandler: { [weak self] (count, collection) in
       guard let strongSelf = self, collection == strongSelf.album else {
         return
       }
-      self?.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
-      self?.accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
+      strongSelf.countLabel.text = AlbumTableViewCell.numberFormatter.string(from: NSNumber(value: count))
+      strongSelf.accessibilityValue = String(format: LocalizableStrings.accessibilityAlbumImagesCount, locale: nil, arguments: [count])
     })
     
     
-    self.albumImageView.imageView.contentMode = UIView.ContentMode.center
-    self.albumImageView.image = nil
+    albumImageView.imageView.contentMode = UIView.ContentMode.center
+    albumImageView.image = nil
     
     guard let album = self.album, !album.isRecentlyDeletedCollection && album.assetCollectionSubtype != .smartAlbumAllHidden else {
       return
     }
-    album.loadPreviewImage(self.albumImageView.preferredImageSize, fetchOptions: fetchOptions, completionHandler: { [weak self] (image, _) in
+    album.loadPreviewImage(albumImageView.preferredImageSize, fetchOptions: fetchOptions, completionHandler: { [weak self] (image, _) in
       if let image = image {
         self?.albumImageView.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         self?.albumImageView.image = image

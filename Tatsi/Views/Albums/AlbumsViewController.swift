@@ -38,7 +38,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   weak var delegate: AlbumsViewControllerDelegate?
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return self.config?.preferredStatusBarStyle ?? .default
+    return config?.preferredStatusBarStyle ?? .default
   }
   
   // MARK: - Private Properties
@@ -87,38 +87,38 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let cancelButtonItem = self.pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
+    let cancelButtonItem = pickerViewController?.customCancelButtonItem() ?? UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(AlbumsViewController.cancel(_:)))
     cancelButtonItem.target = self
     cancelButtonItem.action = #selector(cancel(_:))
     cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
-    cancelButtonItem.tintColor = self.config?.colors.link ?? TatsiConfig.default.colors.link
-    self.navigationItem.rightBarButtonItem = cancelButtonItem
+    cancelButtonItem.tintColor = config?.colors.link ?? TatsiConfig.default.colors.link
+    navigationItem.rightBarButtonItem = cancelButtonItem
     
-    self.navigationItem.backBarButtonItem?.accessibilityIdentifier = "tatsi.button.albums"
+    navigationItem.backBarButtonItem?.accessibilityIdentifier = "tatsi.button.albums"
     
-    self.title = LocalizableStrings.albumsViewTitle
+    title = LocalizableStrings.albumsViewTitle
     
-    self.tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
-    self.tableView.register(AlbumsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlbumsTableHeaderView.reuseIdentifier)
-    self.tableView.rowHeight = 90
-    self.tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-    self.tableView.separatorStyle = .none
-    self.tableView.backgroundColor = self.config?.colors.background ?? TatsiConfig.default.colors.background
+    tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
+    tableView.register(AlbumsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlbumsTableHeaderView.reuseIdentifier)
+    tableView.rowHeight = 90
+    tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+    tableView.separatorStyle = .none
+    tableView.backgroundColor = config?.colors.background ?? TatsiConfig.default.colors.background
     
-    self.tableView.accessibilityIdentifier = "tatsi.tableView.albums"
+    tableView.accessibilityIdentifier = "tatsi.tableView.albums"
     
-    self.startLoadingAlbums()
+    startLoadingAlbums()
   }
   
   // MARK: - Accessibility
   
   public override func accessibilityPerformEscape() -> Bool {
-    if self.config?.singleViewMode == true {
+    if config?.singleViewMode == true {
       return false
     } else {
-      self.cancelPicking()
-      if self.pickerViewController?.pickerDelegate == nil {
-        self.dismiss(animated: true, completion: nil)
+      cancelPicking()
+      if pickerViewController?.pickerDelegate == nil {
+        dismiss(animated: true, completion: nil)
       }
       return true
     }
@@ -128,36 +128,36 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   
   fileprivate func startLoadingAlbums() {
     var newCategories = [AlbumCategory]()
-    let smartAlbums = self.fetchSmartAlbums()
+    let smartAlbums = fetchSmartAlbums()
     if !smartAlbums.isEmpty {
       newCategories.append(AlbumCategory(headerTitle: nil, albums: smartAlbums))
     }
     
-    let userAlbums = self.fetchUserAlbums()
+    let userAlbums = fetchUserAlbums()
     if !userAlbums.isEmpty {
       newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewMyAlbumsHeader, albums: userAlbums))
     }
     
-    if self.config?.showSharedAlbums == true {
-      let sharedAlbums = self.fetchSharedAlbums()
+    if config?.showSharedAlbums == true {
+      let sharedAlbums = fetchSharedAlbums()
       if !sharedAlbums.isEmpty {
         newCategories.append(AlbumCategory(headerTitle: LocalizableStrings.albumsViewSharedAlbumsHeader, albums: sharedAlbums))
       }
     }
-    self.categories = newCategories
+    categories = newCategories
   }
   
   fileprivate func fetchSmartAlbums() -> [PHAssetCollection] {
     let collectionResults = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.albumRegular, options: nil)
     var collections = [PHAssetCollection]()
-    collectionResults.enumerateObjects({ (collection, _, _) in
+    collectionResults.enumerateObjects({ collection, _, _ in
       guard self.config?.isCollectionAllowed(collection) == true else {
         return
       }
       collections.append(collection)
     })
     collections.sort { (collection1, collection2) -> Bool in
-      guard let index1 = self.smartAlbumSortingOrder.firstIndex(of: collection1.assetCollectionSubtype), let index2 = self.smartAlbumSortingOrder.firstIndex(of: collection2.assetCollectionSubtype) else {
+      guard let index1 = smartAlbumSortingOrder.firstIndex(of: collection1.assetCollectionSubtype), let index2 = smartAlbumSortingOrder.firstIndex(of: collection2.assetCollectionSubtype) else {
         return true
       }
       return index1 < index2
@@ -168,7 +168,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   fileprivate func fetchUserAlbums() -> [PHAssetCollection] {
     let collectionResults = PHCollectionList.fetchTopLevelUserCollections(with: nil)
     var collections = [PHAssetCollection]()
-    collectionResults.enumerateObjects({ (collection, _, _) in
+    collectionResults.enumerateObjects({ collection, _, _ in
       guard let assetCollection = collection as? PHAssetCollection, self.config?.isCollectionAllowed(collection) == true else {
         return
       }
@@ -186,7 +186,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   fileprivate func fetchSharedAlbums() -> [PHAssetCollection] {
     let collectionResults = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumCloudShared, options: nil)
     var collections = [PHAssetCollection]()
-    collectionResults.enumerateObjects({ (collection, _, _) in
+    collectionResults.enumerateObjects({ collection, _, _ in
       collections.append(collection)
     })
     collections.sort { (collection1, collection2) -> Bool in
@@ -201,20 +201,20 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
   // MARK: - Actions
   
   @objc fileprivate func cancel(_ sender: AnyObject) {
-    self.cancelPicking()
+    cancelPicking()
   }
   
   // MARK: - Helpers
   
   fileprivate func category(for section: Int) -> AlbumCategory? {
-    guard section < self.categories.count else {
+    guard section < categories.count else {
       return nil
     }
-    return self.categories[section]
+    return categories[section]
   }
   
   fileprivate func album(for indexPath: IndexPath) -> PHAssetCollection? {
-    guard let category = self.category(for: indexPath.section), indexPath.row < category.albums.count else {
+    guard let category = category(for: indexPath.section), indexPath.row < category.albums.count else {
       return nil
     }
     return category.albums[indexPath.row]
@@ -227,21 +227,21 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
 extension AlbumsViewController {
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return self.categories.count
+    return categories.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.category(for: section)?.albums.count ?? 0
+    return category(for: section)?.albums.count ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseIdentifier, for: indexPath) as? AlbumTableViewCell else {
       fatalError("AlbumTableViewCell probably not registered")
     }
-    cell.album = self.album(for: indexPath)
-    cell.reloadContents(with: self.config?.assetFetchOptions())
-    cell.accessoryType = (self.config?.singleViewMode ?? false) ? .none : .disclosureIndicator
-    cell.colors = self.config?.colors
+    cell.album = album(for: indexPath)
+    cell.reloadContents(with: config?.assetFetchOptions())
+    cell.accessoryType = (config?.singleViewMode ?? false) ? .none : .disclosureIndicator
+    cell.colors = config?.colors
     return cell
   }
   
@@ -252,32 +252,32 @@ extension AlbumsViewController {
 extension AlbumsViewController {
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let album = self.album(for: indexPath) else {
+    guard let album = album(for: indexPath) else {
       return
     }
-    if let delegate = self.delegate {
+    if let delegate = delegate {
       delegate.albumsViewController(self, didSelectAlbum: album)
     } else {
       let gridViewController = AssetsGridViewController(album: album)
-      self.navigationController?.pushViewController(gridViewController, animated: true)
+      navigationController?.pushViewController(gridViewController, animated: true)
     }
-    self.didSelectCollection(album)
+    didSelectCollection(album)
   }
   
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard let category = self.category(for: section) else {
+    guard let category = category(for: section) else {
       return nil
     }
     guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: AlbumsTableHeaderView.reuseIdentifier) as? AlbumsTableHeaderView else {
       fatalError("AlbumsTableHeaderView probably not registered")
     }
     headerView.title = category.headerTitle
-    headerView.colors = self.config?.colors
+    headerView.colors = config?.colors
     return headerView
   }
   
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    guard self.category(for: section)?.headerTitle != nil else {
+    guard category(for: section)?.headerTitle != nil else {
       return 0
     }
     return AlbumsTableHeaderView.height

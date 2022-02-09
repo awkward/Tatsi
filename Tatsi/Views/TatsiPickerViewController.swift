@@ -18,7 +18,7 @@ final public class TatsiPickerViewController: UINavigationController {
   public weak var pickerDelegate: TatsiPickerViewControllerDelegate?
   
   override public var preferredStatusBarStyle: UIStatusBarStyle {
-    return self.config.preferredStatusBarStyle
+    return config.preferredStatusBarStyle
   }
   
   // MARK: - Initializers
@@ -30,7 +30,7 @@ final public class TatsiPickerViewController: UINavigationController {
     navigationBar.barTintColor = config.colors.background
     navigationBar.tintColor = config.colors.link
     
-    self.setIntialViewController()
+    setIntialViewController()
   }
   
   required public init?(coder aDecoder: NSCoder) {
@@ -45,7 +45,7 @@ final public class TatsiPickerViewController: UINavigationController {
       //Authorized, show the album view or the album detail view.
       var album: PHAssetCollection?
       let userLibrary = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject
-      switch self.config.firstView {
+      switch config.firstView {
       case .userLibrary:
         album = userLibrary
       case .album(let collection):
@@ -53,15 +53,15 @@ final public class TatsiPickerViewController: UINavigationController {
       default:
         break
       }
-      if let initialAlbum = album ?? userLibrary, self.config.singleViewMode {
-        self.viewControllers = [AssetsGridViewController(album: initialAlbum)]
+      if let initialAlbum = album ?? userLibrary, config.singleViewMode {
+        viewControllers = [AssetsGridViewController(album: initialAlbum)]
       } else {
-        self.showAlbumViewController(with: album)
+        showAlbumViewController(with: album)
       }
       
     case .denied, .notDetermined, .restricted:
       // Not authorized, show the view to give access
-      self.viewControllers = [AuthorizationViewController()]
+      viewControllers = [AuthorizationViewController()]
     @unknown default:
       assertionFailure("Unknown authorization status detected.")
     }
@@ -69,18 +69,18 @@ final public class TatsiPickerViewController: UINavigationController {
   
   private func showAlbumViewController(with collection: PHAssetCollection?) {
     if let collection = collection {
-      self.viewControllers = [AlbumsViewController(), AssetsGridViewController(album: collection)]
+      viewControllers = [AlbumsViewController(), AssetsGridViewController(album: collection)]
     } else {
-      self.viewControllers = [AlbumsViewController()]
+      viewControllers = [AlbumsViewController()]
     }
   }
   
   internal func customCancelButtonItem() -> UIBarButtonItem? {
-    return self.pickerDelegate?.cancelBarButtonItem(for: self)
+    return pickerDelegate?.cancelBarButtonItem(for: self)
   }
   
   internal func customDoneButtonItem() -> UIButton? {
-    return self.pickerDelegate?.doneBarButtonItem(for: self)
+    return pickerDelegate?.doneBarButtonItem(for: self)
   }
   
 }
