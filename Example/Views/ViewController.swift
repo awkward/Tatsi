@@ -50,7 +50,7 @@ final class ViewController: UIViewController {
     config.showCameraOption = true
     config.supportedMediaTypes = [.video, .image]
     config.firstView = self.firstView
-    config.maxNumberOfSelections = 2
+    config.maxNumberOfSelections = 5
     
     let pickerViewController = TatsiPickerViewController(config: config)
     pickerViewController.pickerDelegate = self

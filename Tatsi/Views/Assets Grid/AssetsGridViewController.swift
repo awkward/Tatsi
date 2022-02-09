@@ -276,7 +276,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
   }
   
   fileprivate func configureForNewAlbum() {
-    title = album.localizedTitle
+    title = updateTitleBasedOnSelectedAssets()
     if let color = config?.colors.label {
       navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: color]
     }
@@ -292,6 +292,28 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
       titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)
       navigationItem.titleView = titleView
     }
+  }
+  
+  fileprivate func updateTitleBasedOnSelectedAssets() -> String {
+    var updatedTitle = ""
+    let assetCount = selectedAssets.count
+    let videoSelected = selectedAssets.contains(where: { $0.mediaType == .video })
+    let photosSelected = selectedAssets.contains(where: { $0.mediaType == .image })
+    
+    if videoSelected && photosSelected {
+      // We know we have more than 1 item if both are true.
+      updatedTitle = "\(assetCount) items selected"
+    } else if videoSelected {
+      // User can only select one video.
+      updatedTitle = "\(assetCount) video selected"
+    } else if photosSelected {
+      // We only have photo(s)
+      updatedTitle = assetCount > 1 ? "\(assetCount) photos selected" : "\(assetCount) photo selected"
+    } else {
+      // There are no selected assets
+      updatedTitle = "Tap to Select"
+    }
+    return updatedTitle
   }
   
   // MARK: - Button state
@@ -469,6 +491,7 @@ extension AssetsGridViewController {
           return
         }
         selectedAssets.append(asset)
+        title = updateTitleBasedOnSelectedAssets()
         if let maxSelection = config?.maxNumberOfSelections, maxSelection == 1, config?.finishImmediatelyWithMaximumOfOne != false {
           finishPicking(with: selectedAssets)
         }
@@ -487,6 +510,7 @@ extension AssetsGridViewController {
       return
     }
     selectedAssets.remove(at: index)
+    title = updateTitleBasedOnSelectedAssets()
   }
   
 }
