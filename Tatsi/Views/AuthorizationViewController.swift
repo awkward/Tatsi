@@ -117,10 +117,12 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         guard let url = URL(string: UIApplication.openSettingsURLString) else {
             return
         }
-        if #available(iOS 10, *) {
+        if #available(iOS 10, visionOS 1, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
+            #if !os(visionOS)
             UIApplication.shared.openURL(url)
+            #endif
         }
         
     }

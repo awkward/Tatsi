@@ -156,7 +156,11 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.imageView.image = nil
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             autoreleasepool {
+                #if !os(visionOS)
                 let scale = UIScreen.main.scale > 2 ? 2 : UIScreen.main.scale
+                #else
+                let scale = CGFloat(1)
+                #endif
                 guard let targetSize = self?.imageSize.scaled(with: scale), self?.asset?.localIdentifier == asset.localIdentifier else {
                     return
                 }

@@ -48,10 +48,14 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     // MARK: - Private Properties
     
     fileprivate var showCameraButton: Bool {
+        #if os(visionOS)
+        return false
+        #else
         guard self.album.isUserLibrary, UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) else {
             return false
         }
         return self.config?.showCameraOption ?? false
+        #endif
     }
     
     fileprivate var emptyView: AlbumEmptyView? {
@@ -327,7 +331,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        #if !os(visionOS)
         self.emptyView?.layoutMargins = UIEdgeInsets(top: self.topLayoutGuide.length + 20, left: 20, bottom: self.bottomLayoutGuide.length + 20, right: 20)
+        #endif
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -463,11 +469,13 @@ extension AssetsGridViewController {
                 }
             }
         } else {
+            #if !os(visionOS)
             let cameraController = UIImagePickerController()
             cameraController.sourceType = UIImagePickerController.SourceType.camera
             cameraController.delegate = self
             self.present(cameraController, animated: true, completion: nil)
             collectionView.deselectItem(at: indexPath, animated: true)
+            #endif
         }
     }
     
