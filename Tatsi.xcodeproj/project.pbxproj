@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,8 +19,8 @@
 		0C5B61491F0D2293005A25CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B61481F0D2293005A25CE /* ViewController.swift */; };
 		0C5B614E1F0D2293005A25CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C5B614D1F0D2293005A25CE /* Assets.xcassets */; };
 		0C5B61611F0D231E005A25CE /* Tatsi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C5B615F1F0D231D005A25CE /* Tatsi.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0C5B61641F0D231E005A25CE /* Tatsi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5B615D1F0D231D005A25CE /* Tatsi.framework */; };
-		0C5B61651F0D231E005A25CE /* Tatsi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5B615D1F0D231D005A25CE /* Tatsi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0C5B61641F0D231E005A25CE /* Tatsi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5B615D1F0D231D005A25CE /* Tatsi.framework */; platformFilter = ios; };
+		0C5B61651F0D231E005A25CE /* Tatsi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5B615D1F0D231D005A25CE /* Tatsi.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0C5B61781F0D250F005A25CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C5B61741F0D250F005A25CE /* LaunchScreen.storyboard */; };
 		0C5B61791F0D250F005A25CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C5B61761F0D250F005A25CE /* Main.storyboard */; };
 		0C5B617B1F0E302C005A25CE /* TatsiPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B617A1F0E302C005A25CE /* TatsiPickerViewController.swift */; };
@@ -558,6 +558,7 @@
 		};
 		0C5B61631F0D231E005A25CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 0C5B615C1F0D231D005A25CE /* Tatsi */;
 			targetProxy = 0C5B61621F0D231E005A25CE /* PBXContainerItemProxy */;
 		};
@@ -589,10 +590,17 @@
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = TatsiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.TatsiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tatsi Example.app/Tatsi Example";
 			};
 			name = Debug;
@@ -603,10 +611,17 @@
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = TatsiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.TatsiTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tatsi Example.app/Tatsi Example";
 			};
 			name = Release;
@@ -717,7 +732,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -730,10 +746,16 @@
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "co.awkward.tatsi-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,7";
 			};
 			name = Debug;
 		};
@@ -745,10 +767,16 @@
 				DEVELOPMENT_TEAM = N4KR5KV52L;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "co.awkward.tatsi-example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,7";
 			};
 			name = Release;
 		};
@@ -766,13 +794,19 @@
 				INFOPLIST_FILE = Tatsi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.tatsi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -792,12 +826,18 @@
 				INFOPLIST_FILE = Tatsi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.awkward.tatsi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

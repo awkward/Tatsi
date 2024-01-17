@@ -31,7 +31,12 @@ extension PHAssetCollection {
                 let requestOptions = PHImageRequestOptions()
                 requestOptions.isSynchronous = false
                 requestOptions.resizeMode = PHImageRequestOptionsResizeMode.exact
-                PHImageManager.default().requestImage(for: asset, targetSize: targetSize.scaled(with: UIScreen.main.scale), contentMode: PHImageContentMode.aspectFill, options: requestOptions, resultHandler: { (image, _) in
+                #if !os(visionOS)
+                let scale = UIScreen.main.scale
+                #else
+                let scale = CGFloat(1)
+                #endif
+                PHImageManager.default().requestImage(for: asset, targetSize: targetSize.scaled(with: scale), contentMode: PHImageContentMode.aspectFill, options: requestOptions, resultHandler: { (image, _) in
                     DispatchQueue.main.async {
                         completionHandler(image, asset)
                     }

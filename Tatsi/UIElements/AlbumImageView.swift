@@ -61,12 +61,17 @@ final internal class AlbumImageView: UIView {
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
+        #if !os(visionOS)
+        let scale = UIScreen.main.scale
+        #else
+        let scale = CGFloat(1)
+        #endif
         // Drawing code
-        let firstLinePath = UIBezierPath(rect: CGRect(x: 7, y: 0, width: rect.width - ( 7 * 2 ), height: 1 / UIScreen.main.scale))
+        let firstLinePath = UIBezierPath(rect: CGRect(x: 7, y: 0, width: rect.width - ( 7 * 2 ), height: 1 / scale))
         self.linesColor.withAlphaComponent(0.4).setFill()
         firstLinePath.fill()
         
-        let secondLinePath = UIBezierPath(rect: CGRect(x: 4, y: 2, width: rect.width - ( 4 * 2 ), height: 1 / UIScreen.main.scale))
+        let secondLinePath = UIBezierPath(rect: CGRect(x: 4, y: 2, width: rect.width - ( 4 * 2 ), height: 1 / scale))
         self.linesColor.withAlphaComponent(0.6).setFill()
         secondLinePath.fill()
     }
